@@ -1,0 +1,17 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  background: url("../../assets/wave_left.svg") left no-repeat,
+    url("../../assets/wave_right.svg") right no-repeat,
+    linear-gradient(
+      90deg,
+      #df4636 0%,
+      #d13c3e 32.69%,
+      #c03346 65.37%,
+      #b52b4f 98.06%
+    );
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
