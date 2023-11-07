@@ -14,6 +14,11 @@ interface IProps {
 const AuthProvider = ({ children }: IProps) => {
   const [user, setUser] = useState<User | null>(null);
 
+  const deslogar = async () => {
+    setUser(null);
+    logout();
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("auth.token");
     const user = localStorage.getItem("auth.user");
@@ -28,7 +33,7 @@ const AuthProvider = ({ children }: IProps) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ login, logout, user }}>
+    <AuthContext.Provider value={{ login, logout: deslogar, user }}>
       {children}
     </AuthContext.Provider>
   );

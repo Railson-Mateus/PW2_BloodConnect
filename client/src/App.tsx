@@ -1,16 +1,20 @@
 import { BrowserRouter } from "react-router-dom";
 import AuthProvider from "./context/authContext";
+import { AppThemeProvider } from "./context/themeContext";
 import Router from "./routes/routes";
+import { SidebarProvider } from "./context/sidebarContext";
 
 function App() {
   return (
-    <>
-      <AuthProvider>
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
-      </AuthProvider>
-    </>
+    <AppThemeProvider>
+      <SidebarProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <Router />
+          </BrowserRouter>
+        </AuthProvider>
+      </SidebarProvider>
+    </AppThemeProvider>
   );
 }
 

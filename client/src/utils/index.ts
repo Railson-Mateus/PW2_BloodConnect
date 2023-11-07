@@ -3,7 +3,6 @@ import { ILoginRequest, ILoginResponse } from "@/types";
 
 export const login = async ({ email, password, admin }: ILoginRequest) => {
   const urlLogin: string = admin ? "/admin/signin" : "/signin";
-  console.log(urlLogin);
 
   try {
     const data = { email, password };
@@ -18,7 +17,7 @@ export const login = async ({ email, password, admin }: ILoginRequest) => {
   }
 };
 
-export const logout = () => {
+export const logout = async () => {
   try {
     localStorage.removeItem("auth.token");
     localStorage.removeItem("auth.user");
