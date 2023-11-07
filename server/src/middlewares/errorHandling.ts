@@ -1,5 +1,5 @@
+import { ApiError } from "@/helpers/api-erros";
 import { Request, Response, NextFunction } from "express";
-import { ApiError } from "@helpers/api-erros";
 
 const errorHandlingMiddleware = (
   error: Error & Partial<ApiError>,

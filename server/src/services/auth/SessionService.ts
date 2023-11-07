@@ -35,7 +35,7 @@ export class SessionService implements ISessionService {
     const userId = user.id;
     delete user.password;
 
-    const token = await this.generateToken.execute(userId);
+    const token = await this.generateToken.execute(userId, user.isAdmin);
 
     return { token, user };
   }

@@ -6,6 +6,7 @@ import cors from "cors";
 import express from "express";
 
 import errorHandlingMiddleware from "@/middlewares/errorHandling";
+import authRoutes from "@/routes/auth.routes";
 import userRoutes from "@/routes/user.routes";
 
 const server = express();
@@ -19,7 +20,8 @@ server.use(express.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(cookieParser());
 
-server.use(userRoutes);
+server.use("/auth", authRoutes);
+server.use("/user", userRoutes);
 
 server.use(errorHandlingMiddleware);
 

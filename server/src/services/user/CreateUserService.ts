@@ -1,19 +1,18 @@
 import { hash } from "bcrypt";
 
-import { prisma } from "@/database/prismaClient";
 import { IUser } from "@/models/User";
 import { ApiError, ConflictError } from "@/helpers/api-erros";
 import { ICreateUserService } from "@/interfaces/protocols";
 import { PrismaClient } from "@prisma/client";
 import { CreateUserDto } from "@/validators/User";
 
-export class Create implements ICreateUserService {
+export class CreateUserService implements ICreateUserService {
   constructor(private readonly prisma: PrismaClient) {}
 
   async execute(
     data: CreateUserDto
   ): Promise<Omit<Required<IUser>, "password">> {
-    const userExists = await prisma.user.findUnique({
+    const userExists = await this.prisma.user.findUnique({
       where: {
         email: data.email,
       },
@@ -27,7 +26,7 @@ export class Create implements ICreateUserService {
       const hashedPassword = await hash(data.password, 8);
       data.password = hashedPassword;
 
-      const userCreated = await prisma.user.create({
+      const userCreated = await this.prisma.user.create({
         data,
       });
 

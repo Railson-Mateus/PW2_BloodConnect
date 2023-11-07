@@ -14,7 +14,7 @@ model User {
   id                 String   @id @default(uuid())
   email              String   @unique
   password           String
-  fullName           String
+  name               String
   phone              String
   dateOfBirth        DateTime
   photo              String?
@@ -24,8 +24,24 @@ model User {
   termsOfUseAccepted Boolean
   privacyPolicy      Boolean
 
+  createdAt DateTime   @default(now())
+  updatedAt DateTime?
+  Donation  Donation[]
+
+  @@map("users")
+}
+
+model Donation {
+  id        String   @id @default(uuid())
+  date      DateTime
+  donorId   String   @map("donor_id")
+  bloodType String
+  amount    Float
+
   createdAt DateTime  @default(now())
   updatedAt DateTime?
 
-  @@map("users")
+  donor User @relation(fields: [donorId], references: [id])
+
+  @@map("donations")
 }

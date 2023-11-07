@@ -1,33 +1,86 @@
-import { UsersControllers } from "@/controllers";
+import {
+  DeleteUserController,
+  GetAllUsersController,
+  GetUserByIdController,
+  UpdateUserController,
+} from "@/controllers";
 import { GenerateToken } from "@/provider/GenerateToken";
 import { Request, Response, Router } from "express";
 import { SessionService } from "@/services/auth/SessionService";
 import { SessionController } from "@/controllers/auth/SessionController";
 import { prisma } from "@/database/prismaClient";
-import { UsersServices } from "@/services/index";
+import {
+  DeleteUserService,
+  GetAllUserService,
+  UpdateUserService,
+} from "@/services/index";
+import { GetUserByIdService } from "../services/user/GetUserByIdService";
+import { ensuredAuthenticated } from "@/middlewares/ensuredAuthenticated";
+import { isAdmin } from "@/middlewares/permissions";
+import { checkOwnership } from "@/middlewares/checkOwnership.";
 
 const userRoutes = Router();
 
-userRoutes.post("/signin", async (req: Request, res: Response) => {
-  const generateToken = new GenerateToken();
+userRoutes.get(
+  "/get-all",
+  ensuredAuthenticated(),
+  isAdmin(),
+  async (req: Request, res: Response) => {
+    const getAllUserService = new GetAllUserService(prisma);
 
-  const sessionService = new SessionService(prisma, generateToken);
+    const getAllUserController = new GetAllUsersController(getAllUserService);
 
-  const sessionController = new SessionController(sessionService);
+    const result = await getAllUserController.handle();
 
-  const result = await sessionController.handle(req.body);
+    res.status(201).json(result);
+  }
+);
 
-  res.json(result);
-});
+userRoutes.get(
+  "/get-user/:id",
+  ensuredAuthenticated(),
+  isAdmin(),
+  async (req: Request, res: Response) => {
+    const getUserService = new GetUserByIdService(prisma);
 
-userRoutes.post("/signup", async (req: Request, res: Response) => {
-  const createUserService = new UsersServices.Create(prisma);
+    const getUserController = new GetUserByIdController(getUserService);
 
-  const createUserController = new UsersControllers.Create(createUserService);
+    const result = await getUserController.handle(req);
 
-  const result = await createUserController.handle(req.body);
+    res.status(201).json(result);
+  }
+);
 
-  res.status(201).json(result);
-});
+userRoutes.patch(
+  "/update/:id",
+  ensuredAuthenticated(),
+  checkOwnership(),
+  async (req: Request, res: Response) => {
+    const updateUserService = new UpdateUserService(prisma);
+
+    const updateUserController = new UpdateUserController(updateUserService);
+
+    const result = await updateUserController.handle(req);
+
+    res.status(201).json(result);
+  }
+);
+
+userRoutes.delete(
+  "/delete/:id",
+  ensuredAuthenticated(),
+  checkOwnership(),
+  async (req: Request, res: Response) => {
+    const deleteUserService = new DeleteUserService(prisma);
+
+    const deleteUserController = new DeleteUserController(deleteUserService);
+
+    console.log(req.params);
+
+    const result = await deleteUserController.handle(req);
+
+    res.json(result);
+  }
+);
 
 export default userRoutes;

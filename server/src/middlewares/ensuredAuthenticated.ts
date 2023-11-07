@@ -1,40 +1,39 @@
-import { NextFunction, Request, Response } from "express"
-import { verify } from "jsonwebtoken"
-import { UserPayload } from "../dtos/userPayload.dto"
-import { UnauthorizedError } from "@/helpers/api-errors"
+import { NextFunction, Request, Response } from "express";
+import { JwtPayload, verify } from "jsonwebtoken";
+import { UnauthorizedError } from "@/helpers/api-erros";
+import { UserPayload } from "@/models/User";
 
 export const ensuredAuthenticated = () => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    const authHeaders = req.headers.authorization
+    const authHeaders = req.headers.authorization;
 
     if (!authHeaders) {
       throw new UnauthorizedError(
-        "You are not authorized to access this resource",
-      )
+        "You are not authorized to access this resource"
+      );
     }
 
-    const [tokenType, token] = authHeaders.split(" ")
+    const [tokenType, token] = authHeaders.split(" ");
 
     if (tokenType !== "Bearer" || !token) {
-      throw new UnauthorizedError("Invalid token")
+      throw new UnauthorizedError("Invalid token");
     }
 
     const secretKey: string =
-      process.env.SECRET_KEY || "8FI0UDRA7kTm1sXKO/4DVRcalvGU+NFhzkInrSskaN0="
+      process.env.SECRET_KEY || "8FI0UDRA7kTm1sXKO/4DVRcalvGU+NFhzkInrSskaN0=";
 
     verify(token, secretKey, (err, decodedToken) => {
       if (err) {
         throw new UnauthorizedError(
-          "You are not authorized to access this resource",
-        )
+          "You are not authorized to access this resource"
+        );
       }
 
-      const { userPayload } = decodedToken as { userPayload: UserPayload }
+      const { userId, admin } = decodedToken as JwtPayload;
 
-      req.userId = userPayload.userId
-      req.role = userPayload.role
-
-      return next()
-    })
-  }
-}
+      req.userId = userId;
+      req.admin = admin;
+      return next();
+    });
+  };
+};

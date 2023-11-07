@@ -7,14 +7,12 @@ import {
   ICreateUserService,
 } from "@/interfaces/protocols";
 import { IUser } from "@/models/User";
+import { GenerateToken } from "@/provider/GenerateToken";
 import { CreateUserDto } from "@/validators/User";
 import { plainToClass } from "class-transformer";
-import { SessionService } from "@/services/auth/SessionService";
-import { prisma } from "@/database/prismaClient";
-import { GenerateToken } from "@/provider/GenerateToken";
 
-export class Create implements IController {
-  constructor(private createService: ICreateUserService) {}
+export class CreateUserController implements IController {
+  constructor(private createUserService: ICreateUserService) {}
 
   async handle(
     httpRequest: HttpRequest<CreateUserDto>
@@ -37,11 +35,11 @@ export class Create implements IController {
       throw new BadRequestError(errors.join(", "));
     }
 
-    const userCreated = await this.createService.execute(newUser);
+    const userCreated = await this.createUserService.execute(newUser);
 
     const generateToken = new GenerateToken();
     const userId = userCreated.id as string;
-    const token = await generateToken.execute(userId);
+    const token = await generateToken.execute(userId, userCreated.isAdmin);
 
     return { user: userCreated, accessToken: token };
   }

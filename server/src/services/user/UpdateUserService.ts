@@ -1,19 +1,21 @@
 import { PrismaClient } from "@prisma/client";
 import { hash } from "bcrypt";
 
-import { prisma } from "@/database/prismaClient";
 import { ApiError, NotFoundError } from "@/helpers/api-erros";
-import { IUpdateUser, IUser } from "@/models/User";
 import { IUpdateUserService } from "@/interfaces/protocols";
+import { IUpdateUser, IUser } from "@/models/User";
 
-export class Update implements IUpdateUserService {
+export class UpdateUserService implements IUpdateUserService {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async execute(data: IUpdateUser): Promise<IUser> {
+  async execute(
+    data: IUpdateUser,
+    id: string
+  ): Promise<Omit<Required<IUser>, "password">> {
     try {
-      const userExist = await prisma.user.findUnique({
+      const userExist = await this.prisma.user.findUnique({
         where: {
-          email: data.email,
+          id,
         },
       });
 
@@ -27,13 +29,15 @@ export class Update implements IUpdateUserService {
 
       const userUpdated = await this.prisma.user.update({
         where: {
-          email: data.email,
+          id,
         },
         data,
       });
 
       return userUpdated;
     } catch (error) {
+      console.log(error.message);
+
       throw new ApiError("User not updated", 500);
     }
   }

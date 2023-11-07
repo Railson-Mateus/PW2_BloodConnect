@@ -1,13 +1,5 @@
-import * as createUser from "./Create"
-import * as deleteUser from "./Delete"
-import * as updateUser from "./Update"
-import * as getAllUsers from "./GetAll"
-import * as getUserById from "./GetById"
-
-export const UsersControllers = {
-  ...createUser,
-  ...deleteUser,
-  ...updateUser,
-  ...getAllUsers,
-  ...getUserById,
-}
+export { CreateUserController } from "./CreateUserController";
+export { DeleteUserController } from "./DeleteUserController";
+export { UpdateUserController } from "./UpdateUserController";
+export { GetAllUsersController } from "./GetAllUsersController";
+export { GetUserByIdController } from "./GetUserByIdController";

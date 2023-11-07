@@ -2,7 +2,7 @@ export interface IUser {
   id: string | undefined;
   email: string;
   password: string;
-  fullName: string;
+  name: string;
   bloodType: string;
   gender: string | null;
   photo: string | null;
@@ -19,4 +19,5 @@ export interface IUpdateUser extends Partial<IUser> {}
 
 export interface UserPayload {
   userId: string;
+  admin: boolean;
 }
