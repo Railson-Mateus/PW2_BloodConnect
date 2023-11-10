@@ -14,8 +14,8 @@ export interface IController {
   handle(httpRequest: HttpRequest<unknown>): Promise<unknown>;
 }
 
-export interface ISessionService {
-  execute({ email, password }: RequestUser): Promise<{ token: string }>;
+export interface IService<T, U> {
+  execute(data: T): Promise<U>;
 }
 
 // User Service Interfaces
@@ -48,5 +48,21 @@ export interface ICreateDonationService {
 }
 
 export interface IDeleteDonationService {
-  execute(donationId: string): Promise<string>;
+  execute(donationId: string): Promise<IDonation>;
+}
+
+export interface IGetAllDonationService {
+  execute(): Promise<IDonation[]>;
+}
+
+export interface IGetDonationByDonorService {
+  execute(donorId: string): Promise<IDonation[]>;
+}
+
+export interface IGetDonationByIdService {
+  execute(donationId: string): Promise<IDonation | null>;
+}
+
+export interface IGetLastDonationByUserService {
+  execute(donorId: string): Promise<IDonation | null>;
 }

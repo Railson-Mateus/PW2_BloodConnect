@@ -1,10 +1,12 @@
-import { CreateUserController } from "@/controllers";
-import { SessionController } from "@/controllers/auth/SessionController";
-import { prisma } from "@/database/prismaClient";
-import { GenerateToken } from "@/provider/GenerateToken";
-import { CreateUserService } from "@/services";
-import { SessionService } from "@/services/auth/SessionService";
 import { Request, Response, Router } from "express";
+
+import { prisma } from "@/database/prismaClient";
+
+import { GenerateToken } from "@/provider/GenerateToken";
+
+import { CreateUserService, SessionService } from "@/services";
+
+import { SessionController, CreateUserController } from "@/controllers";
 
 const authRoutes = Router();
 
@@ -30,4 +32,4 @@ authRoutes.post("/signup", async (req: Request, res: Response) => {
   res.status(201).json(result);
 });
 
-export default authRoutes;
+export { authRoutes };

@@ -13,4 +13,4 @@ const errorHandlingMiddleware = (
   return res.status(statusCode).json({ message });
 };
 
-export default errorHandlingMiddleware;
+export { errorHandlingMiddleware };
