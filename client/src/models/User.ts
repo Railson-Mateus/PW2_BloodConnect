@@ -39,6 +39,13 @@ export const UserSchemaSignUp = z
     confirmPassword: z
       .string()
       .min(6, { message: "confirmar senha obrigatório" }),
+    phone: z.optional(z.string()),
+    dateOfBirth: z.string(),
+    photo: z.any(),
+    gender: z.optional(z.string()),
+    bloodType: z.string(),
+    termsOfUseAccepted: z.boolean(),
+    privacyPolicy: z.boolean(),
   })
   .refine(({ password, confirmPassword }) => password === confirmPassword, {
     message: "Errors: Passwords não são iguais",

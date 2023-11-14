@@ -6,7 +6,7 @@ import { GenerateToken } from "@/provider/GenerateToken";
 
 import { CreateUserService, SessionService } from "@/services";
 
-import { SessionController, CreateUserController } from "@/controllers";
+import { CreateUserController, SessionController } from "@/controllers";
 
 const authRoutes = Router();
 
