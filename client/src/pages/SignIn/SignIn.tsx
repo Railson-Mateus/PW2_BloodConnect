@@ -72,7 +72,8 @@ const SignIn = () => {
       setErrorMessage(result);
       return;
     }
-
+    console.log("login", result);
+    
     navigate("/home");
   }
 

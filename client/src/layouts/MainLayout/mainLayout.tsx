@@ -27,8 +27,8 @@ const MainLayout = () => {
         >
           <MenuIcon />
         </IconButton>
-        <Outlet />
       </Sidebar>
+      <Outlet />
     </Box>
   );
 };

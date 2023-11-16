@@ -1,9 +1,9 @@
 import { api } from "@/api/axios";
 import { ILoginRequest, ILoginResponse } from "@/types";
 
-export const login = async ({ email, password, admin }: ILoginRequest) => {
-  const urlLogin: string = admin ? "/admin/signin" : "/signin";
-
+export const login = async ({ email, password, admin = false }: ILoginRequest) => {
+  const urlLogin: string = admin ? "/auth/admin/signin" : "/auth/signin";
+  
   try {
     const data = { email, password };
 
