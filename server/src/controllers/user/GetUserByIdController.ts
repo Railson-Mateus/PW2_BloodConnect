@@ -1,5 +1,3 @@
-import { prisma } from "@/database/prismaClient";
-import { ApiError, NotFoundError } from "@/helpers/api-erros";
 import {
   HttpRequest,
   IController,
@@ -7,7 +5,7 @@ import {
 } from "@/interfaces/protocols";
 import { IUser } from "@/models/User";
 
-type IDeleteUser = {
+type IProps = {
   id: string;
 };
 
@@ -15,7 +13,7 @@ export class GetUserByIdController implements IController {
   constructor(private getUserByIdService: IGetUserByIdService) {}
 
   async handle(
-    httpRequest: HttpRequest<IDeleteUser>
+    httpRequest: HttpRequest<IProps>
   ): Promise<Omit<Required<IUser>, "password"> | undefined> {
     const { id } = httpRequest.params;
     try {

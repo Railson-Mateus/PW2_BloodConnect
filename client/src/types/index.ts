@@ -13,6 +13,10 @@ export interface ILoginResponse {
 
 export interface IContextAuth {
   user: User | null;
-  login: ({ email, password }: ILoginRequest) => Promise<string>;
+  login: ({
+    email,
+    password,
+    admin,
+  }: ILoginRequest) => Promise<string | undefined>;
   logout: () => void;
 }

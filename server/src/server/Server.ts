@@ -5,9 +5,10 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 
-import errorHandlingMiddleware from "@/middlewares/errorHandling";
-import authRoutes from "@/routes/auth.routes";
-import userRoutes from "@/routes/user.routes";
+import { errorHandlingMiddleware } from "@/middlewares";
+
+import { authRoutes, donationRoutes, userRoutes } from "@/routes";
+import { uploadRoute } from "@/routes/upload.route";
 
 const server = express();
 
@@ -17,11 +18,13 @@ server.use(
   })
 );
 server.use(express.json());
-server.use(bodyParser.urlencoded({ extended: false }));
+server.use(bodyParser.urlencoded({ extended: true }));
 server.use(cookieParser());
 
 server.use("/auth", authRoutes);
 server.use("/user", userRoutes);
+server.use("/donation", donationRoutes);
+server.use(uploadRoute);
 
 server.use(errorHandlingMiddleware);
 

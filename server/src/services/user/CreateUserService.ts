@@ -22,7 +22,6 @@ export class CreateUserService implements ICreateUserService {
     if (userExists) {
       throw new ConflictError("User already exists");
     }
-
     try {
       const hashedPassword = await hash(data.password, 8);
       data.password = hashedPassword;

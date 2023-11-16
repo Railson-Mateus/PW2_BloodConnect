@@ -1,3 +1,7 @@
 .button {
   background-color: "linear-gradient(180deg, #E04735 0%, #D13C3E 28.13%, #C03346 54.69%, #BC304A 80.21%, #AD2651 100%)";
 }
+
+.logo {
+  margin-bottom: 15px;
+}

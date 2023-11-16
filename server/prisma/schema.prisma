@@ -34,7 +34,7 @@ model User {
 model Donation {
   id        String   @id @default(uuid())
   date      DateTime
-  donorId   String   @map("donor_id")
+  donorId   String
   bloodType String
   amount    Float
 

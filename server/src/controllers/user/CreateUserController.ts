@@ -10,13 +10,14 @@ import { IUser } from "@/models/User";
 import { GenerateToken } from "@/provider/GenerateToken";
 import { CreateUserDto } from "@/validators/User";
 import { plainToClass } from "class-transformer";
+import upload from "@/middlewares/uploadImage";
 
 export class CreateUserController implements IController {
   constructor(private createUserService: ICreateUserService) {}
 
   async handle(
     httpRequest: HttpRequest<CreateUserDto>
-  ): Promise<{ user: Omit<Required<IUser>, "password">; accessToken: string }> {
+  ): Promise<{ user: Omit<Required<IUser>, "password"> }> {
     const newUser = plainToClass(CreateUserDto, httpRequest);
 
     newUser.dateOfBirth = new Date(newUser.dateOfBirth);
@@ -37,10 +38,13 @@ export class CreateUserController implements IController {
 
     const userCreated = await this.createUserService.execute(newUser);
 
-    const generateToken = new GenerateToken();
-    const userId = userCreated.id as string;
-    const token = await generateToken.execute(userId, userCreated.isAdmin);
+    // const generateToken = new GenerateToken();
+    // const userId = userCreated.id as string;
+    // const accesstoken = await generateToken.execute(
+    //   userId,
+    //   userCreated.isAdmin
+    // );
 
-    return { user: userCreated, accessToken: token };
+    return { user: userCreated };
   }
 }

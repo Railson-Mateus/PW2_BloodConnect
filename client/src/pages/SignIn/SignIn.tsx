@@ -21,12 +21,13 @@ import { UserSchemaSignIn, UserSignInType } from "@/models/User";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
-//import styles from "./SignIn.module.css";
+import logo from "@/assets/logo.png";
+import styles from "./SignIn.module.css";
 
 const ButtonCustomized = styled(Button)<ButtonProps>(() => ({
   color: "#fff",
   borderRadius: "0.25rem",
-  width: "41ch",
+  width: "36ch",
   height: "3.5rem",
   padding: "0.625rem 1.5rem",
   justifyContent: "center",
@@ -77,11 +78,13 @@ const SignIn = () => {
     navigate("/home");
   }
 
+  const handleClickNewUser = () => navigate("/signup");
+
   return (
     <Box
       sx={{
-        width: "24rem",
-        height: "28rem",
+        width: "34rem",
+        height: "38rem",
         borderRadius: 3,
         bgcolor: "#fff",
         display: "flex",
@@ -92,7 +95,7 @@ const SignIn = () => {
       }}
       gap={4}
     >
-      <Container
+      <Box
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -100,21 +103,19 @@ const SignIn = () => {
           alignItems: "center",
         }}
       >
-        <Typography sx={{ fontSize: "2rem", fontWeight: "600" }}>
-          Hemocentro
-        </Typography>
-        <Typography sx={{ fontSize: "1.3rem" }}>Digital</Typography>
+        <img src={logo} alt="Logo do Hemonucleo" className={styles.logo} />
         {admin && <Typography sx={{ fontSize: ".8rem" }}>Admin</Typography>}
-      </Container>
-      <Container
+      </Box>
+      <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          width: "80%",
         }}
       >
-        <FormControl sx={{ m: 1, width: "40ch" }} variant="outlined">
+        <FormControl sx={{ m: 1, width: "100%" }} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-text">Email</InputLabel>
           <OutlinedInput
             id="outlined-adornment-email"
@@ -132,7 +133,7 @@ const SignIn = () => {
             <strong style={{ color: "#dd0000" }}>{errors.email.message}</strong>
           )}
         </FormControl>
-        <FormControl sx={{ m: 1, width: "40ch" }} variant="outlined">
+        <FormControl sx={{ m: 1, width: "100%" }} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">
             Password
           </InputLabel>
@@ -161,7 +162,7 @@ const SignIn = () => {
             </strong>
           )}
         </FormControl>
-      </Container>
+      </Box>
       <Container
         sx={{
           display: "flex",
@@ -191,7 +192,7 @@ const SignIn = () => {
           </Typography>
         </Button>
         {!admin && (
-          <Button>
+          <Button onClick={handleClickNewUser}>
             <Typography fontSize={"0.7rem"} color={"black"}>
               Novo usuario
             </Typography>

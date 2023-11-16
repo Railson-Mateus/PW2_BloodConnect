@@ -1,21 +1,24 @@
 import { NotFoundError, UnauthorizedError } from "@/helpers/api-erros";
-import { ISessionService } from "@/interfaces/protocols";
+import { IService, ISessionService } from "@/interfaces/protocols";
 import { IUser } from "@/models/User";
 import { GenerateToken } from "@/provider/GenerateToken";
 import { RequestUser } from "@/validators/RequestUser";
 import { PrismaClient } from "@prisma/client";
 import { compare } from "bcrypt";
 
-export class SessionService implements ISessionService {
+type IResponse = {
+  token: string;
+  user: IUser;
+};
+
+export class SessionService implements IService<RequestUser, IResponse> {
   constructor(
     private readonly prisma: PrismaClient,
     private readonly generateToken: GenerateToken
   ) {}
 
-  async execute({
-    email,
-    password,
-  }: RequestUser): Promise<{ token: string; user: IUser }> {
+  async execute(data: RequestUser): Promise<IResponse> {
+    const { email, password } = data;
     const user = await this.prisma.user.findUnique({
       where: {
         email,
