@@ -9,7 +9,7 @@ uploadRoute.post("/file", async (req: Request, res: Response) => {
     upload.single("photo")(req, res, (err: any) => {
       if (err) {
         console.log("resolve");
-        reject(new BadRequestError("Erro ao fazer upload da imagem"));
+        reject(new BadRequestError(err.message));
       } else {
         resolve();
       }

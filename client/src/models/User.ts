@@ -4,7 +4,7 @@ export interface User {
   id: string | undefined;
   email: string;
   password: string;
-  fullName: string;
+  name: string;
   bloodType: string;
   gender: string | null;
   photo: string | null;

@@ -36,8 +36,9 @@ const Sidebar = ({ children }: IProps) => {
 
   const handleLogout = async () => {
     logout();
-    navigate("/");
+    navigate("/signin");
   };
+  const userImgUrl = `http://localhost:3000/uploads/${user?.photo}`;
 
   return (
     <>
@@ -69,7 +70,7 @@ const Sidebar = ({ children }: IProps) => {
             <Box display={"flex"} alignItems={"center"} mb={1}>
               <Avatar
                 sx={{ height: theme.spacing(7), width: theme.spacing(7) }}
-                src={user?.photo}
+                src={userImgUrl}
               />
               <Box>
                 <Typography
@@ -79,8 +80,7 @@ const Sidebar = ({ children }: IProps) => {
                     ml: 1,
                   }}
                 >
-                  {/* {user?.fullName} */}
-                  Maria Eduarda
+                  {user?.name}
                 </Typography>
                 <Typography sx={{ color: "#fff", fontWeight: "bold", ml: 1 }}>
                   Tipo Sanguineo: {user?.bloodType}
@@ -99,7 +99,7 @@ const Sidebar = ({ children }: IProps) => {
 
           <List component="nav">
             {sidebarOptions.map((sidebarOption) => (
-              <>
+              <Box key={sidebarOption.path}>
                 <MenuButtonOption
                   key={sidebarOption.path}
                   icon={sidebarOption.icon}
@@ -107,8 +107,8 @@ const Sidebar = ({ children }: IProps) => {
                   to={sidebarOption.path}
                   onClick={smDown ? toggleSidebarOpen : undefined}
                 />
-                <Divider />
-              </>
+                <Divider key={`divider-${sidebarOption.path}`} />
+              </Box>
             ))}
           </List>
 
