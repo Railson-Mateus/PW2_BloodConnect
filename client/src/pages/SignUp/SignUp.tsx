@@ -1,3 +1,5 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -17,19 +19,19 @@ import {
   Stepper,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import get from "lodash/get";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
-//import styles from "./SignUp.module.css";
-import { api } from "@/api/axios";
-import { UserSchemaSignUp, UserSignUpType } from "@/models/User";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import PhoneIcon from "@mui/icons-material/Phone";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+
+//import styles from "./SignUp.module.css";
+import { api } from "@/api/axios";
+import { UserSchemaSignUp, UserSignUpType } from "@/models/User";
 
 const steps = ["Set up your account", "Personal info", "Other details"];
 
@@ -37,10 +39,15 @@ const SignUp = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [errorsState, setErrorsState] = useState<any>({});
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword((show) => !show);
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -56,30 +63,59 @@ const SignUp = () => {
     resolver: zodResolver(UserSchemaSignUp),
   });
 
+  useEffect(() => {
+    setErrorsState(errors);
+  }, [errors]);
+
+  const validateForm = async () => {
+    //await trigger();
+    let isValid = true;
+
+    if (activeStep === 0) {
+      const fieldsToValidate = ["email", "password", "confirmPassword"];
+      for (const field of fieldsToValidate) {
+        if (get(errors, field)) {
+          isValid = false;
+        }
+      }
+    } else if (activeStep === 1) {
+      const fieldsToValidate = ["name", "gender", "bloodType"];
+      for (const field of fieldsToValidate) {
+        if (get(errors, field)) {
+          isValid = false;
+        }
+      }
+    } else if (activeStep === 2) {
+      const fieldsToValidate = [
+        "photo",
+        "phone",
+        "dateOfBirth",
+        "termsOfUseAccepted",
+        "privacyPolicy",
+      ];
+      for (const field of fieldsToValidate) {
+        if (get(errors, field)) {
+          isValid = false;
+        }
+      }
+    }
+
+    setIsFormValid(isValid);
+    return isValid;
+  };
+
   const handleSignUp = async (data: UserSignUpType) => {
     try {
       const formData = new FormData();
-      
+
       formData.append("photo", data.photo[0]);
 
-      api.post("/file", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }).then((response) => {
-        const fileName = response.data;
-  
-        data.photo = fileName;
-        delete data.confirmPassword;
-  
-        api.post("/auth/signup", data);
-        
-      }).catch(err => console.log(err))
+      const response = await api.post("/file", formData);
 
 
       navigate("/signin");
     } catch (error) {
-      return error.message;
+      //setError(error.response.data.message);
     }
   };
 
@@ -87,7 +123,11 @@ const SignUp = () => {
     return skipped.has(step);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    const isValid = await validateForm();
+
+    if (!isValid) return;
+
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -206,17 +246,23 @@ const SignUp = () => {
                 </InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
-                  type={showPassword ? "text" : "password"}
-                  {...register("confirmPassword", { required: true })}
+                  type={showConfirmPassword ? "text" : "password"}
+                  {...register("confirmPassword", {
+                    required: "Confirm password is required",
+                  })}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
+                        onClick={handleClickShowConfirmPassword}
                         onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                        {showConfirmPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   }
@@ -266,10 +312,11 @@ const SignUp = () => {
                     required: "Gender is required",
                   })}
                   label="Gender"
+                  defaultValue=""
                 >
-                  <MenuItem value={"Woman"}>Woman</MenuItem>
-                  <MenuItem value={"Men"}>Men</MenuItem>
-                  <MenuItem value={"Other"}>Other</MenuItem>
+                  <MenuItem value="Woman">Woman</MenuItem>
+                  <MenuItem value="Men">Men</MenuItem>
+                  <MenuItem value="Other">Other</MenuItem>
                 </Select>
                 {errors.gender && (
                   <strong style={{ color: "#dd0000" }}>
@@ -288,6 +335,7 @@ const SignUp = () => {
                     required: "Blood type is required",
                   })}
                   label="Blood type"
+                  defaultValue=""
                 >
                   <MenuItem value={"A+"}>A+</MenuItem>
                   <MenuItem value={"A-"}>A-</MenuItem>

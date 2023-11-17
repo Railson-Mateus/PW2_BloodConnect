@@ -58,12 +58,11 @@ const Router = () => {
           </>
         ) : (
           <>
-            <Route path="/" element={<SignIn />} />
+            <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
           </>
         )}
       </Route>
-      {/* <Route path="*" element={<NotFound />} /> */}
     </Routes>
   );
 };

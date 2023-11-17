@@ -14,8 +14,11 @@ const storage = multer.diskStorage({
     file: Express.Multer.File,
     cb: (error: Error | null, filename: string) => void
   ) {
-    // Altere essa variável de ambiente para .jpeg, .jpg ou .png.
-    cb(null, Date.now() + ".png");
+    const fileExtension = file.originalname.split(".").pop();
+    const newFilename = `${Date.now()}.${fileExtension}`;
+
+    cb(null, newFilename);
+    console.log("New filename:", newFilename);
   },
 });
 
