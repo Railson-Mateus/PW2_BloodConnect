@@ -59,22 +59,23 @@ const SignUp = () => {
   const handleSignUp = async (data: UserSignUpType) => {
     try {
       const formData = new FormData();
-      console.log(data.photo[0]);
-
+      
       formData.append("photo", data.photo[0]);
 
-      const response = await api.post("/file", formData, {
+      api.post("/file", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      });
+      }).then((response) => {
+        const fileName = response.data;
+  
+        data.photo = fileName;
+        delete data.confirmPassword;
+  
+        api.post("/auth/signup", data);
+        
+      }).catch(err => console.log(err))
 
-      const fileName = response.data;
-
-      data.photo = fileName;
-      delete data.confirmPassword;
-
-      await api.post("/auth/signup", data);
 
       navigate("/signin");
     } catch (error) {
