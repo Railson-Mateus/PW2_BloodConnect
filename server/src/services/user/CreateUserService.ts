@@ -12,6 +12,7 @@ export class CreateUserService implements ICreateUserService {
   async execute(
     data: CreateUserDto
   ): Promise<Omit<Required<IUser>, "password">> {
+    
     const userExists = await this.prisma.user.findUnique({
       where: {
         email: data.email,
