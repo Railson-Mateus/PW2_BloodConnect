@@ -1,5 +1,5 @@
 import { NotFoundError, UnauthorizedError } from "@/helpers/api-erros";
-import { IService, ISessionService } from "@/interfaces/protocols";
+import { IService } from "@/interfaces/protocols";
 import { IUser } from "@/models/User";
 import { GenerateToken } from "@/provider/GenerateToken";
 import { RequestUser } from "@/validators/RequestUser";

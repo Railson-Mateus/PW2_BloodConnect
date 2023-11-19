@@ -45,3 +45,19 @@ model Donation {
 
   @@map("donations")
 }
+
+model Campaign {
+  id String @id @default(uuid())
+
+  title       String
+  image       String
+  description String
+  local       String
+  startDate   DateTime
+  endDate     DateTime
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+
+  @@map("campaigns")
+}

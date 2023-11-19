@@ -7,10 +7,8 @@ import {
   ICreateUserService,
 } from "@/interfaces/protocols";
 import { IUser } from "@/models/User";
-import { GenerateToken } from "@/provider/GenerateToken";
 import { CreateUserDto } from "@/validators/User";
 import { plainToClass } from "class-transformer";
-import upload from "@/middlewares/uploadImage";
 
 export class CreateUserController implements IController {
   constructor(private createUserService: ICreateUserService) {}

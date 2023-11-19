@@ -3,8 +3,6 @@ import {
   IController,
   IDeleteUserService,
 } from "@/interfaces/protocols";
-import { prisma } from "../../database/prismaClient";
-import { ApiError } from "../../helpers/api-erros";
 
 type IDeleteUser = {
   userId: string;
