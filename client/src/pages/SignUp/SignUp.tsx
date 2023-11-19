@@ -112,12 +112,6 @@ const SignUp = () => {
 
       const response = await api.post("/file", formData);
 
-      const fileName = response.data;
-
-      data.photo = fileName;
-      delete data.confirmPassword;
-
-      await api.post("/auth/signup", data);
 
       navigate("/signin");
     } catch (error) {
