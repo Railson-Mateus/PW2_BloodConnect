@@ -16,6 +16,7 @@ export class GetLastDonationByUserController implements IController {
 
   async handle(httpRequest: HttpRequest<IProps>): Promise<IDonation | null> {
     const { id } = httpRequest.params;
+console.log("Here");
 
     const lastDonation = await this.getLastDonationByUserService.execute(id);
 

@@ -58,8 +58,8 @@ userRoutes.delete(
 
 userRoutes.get(
   "/",
-  ensuredAuthenticated(),
-  isAdmin(),
+  // ensuredAuthenticated(),
+  // isAdmin(),
   async (req: Request, res: Response) => {
     const getAllUserService = new GetAllUserService(prisma);
 

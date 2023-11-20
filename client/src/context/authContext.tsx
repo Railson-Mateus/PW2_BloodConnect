@@ -41,7 +41,6 @@ const AuthProvider = ({ children }: IProps) => {
     }
   };
 
-  console.log(user);
   useEffect(() => {
     
     const token = localStorage.getItem("auth.token");
