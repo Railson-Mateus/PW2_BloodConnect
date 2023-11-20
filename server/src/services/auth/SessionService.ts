@@ -19,12 +19,13 @@ export class SessionService implements IService<RequestUser, IResponse> {
 
   async execute(data: RequestUser): Promise<IResponse> {
     const { email, password } = data;
+    console.log("here", email);
     const user = await this.prisma.user.findUnique({
       where: {
         email,
       },
     });
-
+    
     if (!user) {
       throw new NotFoundError("User or Password incorrect!");
     }
@@ -38,6 +39,7 @@ export class SessionService implements IService<RequestUser, IResponse> {
     const userId = user.id;
     delete user.password;
 
+    
     const token = await this.generateToken.execute(userId, user.isAdmin);
 
     return { token, user };
