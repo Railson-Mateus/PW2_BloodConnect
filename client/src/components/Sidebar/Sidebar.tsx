@@ -1,3 +1,4 @@
+import LogoutIcon from "@mui/icons-material/Logout";
 import {
   Avatar,
   Box,
@@ -10,15 +11,16 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { ReactNode } from "react";
-import LogoutIcon from "@mui/icons-material/Logout";
+import { ReactNode, useEffect, useState } from "react";
 import styles from "./Sidebar.module.css";
 
+import { api } from "@/api/axios";
 import Logo from "@/assets/logo.png";
 import { useAuth } from "@/hooks/useAuth";
 import { useSidebarContext } from "@/hooks/useSidebarContext";
-import MenuButtonOption from "../MenuButtonOption";
+import { IDonation } from "@/models/Donation";
 import { useNavigate } from "react-router-dom";
+import MenuButtonOption from "../MenuButtonOption";
 
 type IProps = {
   children: ReactNode;
@@ -27,6 +29,8 @@ type IProps = {
 const Sidebar = ({ children }: IProps) => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const [lastDonation, setLastDonation] = useState<string>("");
+  const [nextDonation, setNextDonation] = useState<string>("");
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { isSidebarOpen, toggleSidebarOpen, sidebarOptions } =
@@ -38,6 +42,27 @@ const Sidebar = ({ children }: IProps) => {
     logout();
     navigate("/signin");
   };
+
+  const getLastDonation = async () => {
+    const response = await api.get(`/user/${user?.id}/latest-donation`);
+
+    const lastDonation = response.data as IDonation;
+
+    const lastDonationDate = new Date(lastDonation.date);
+
+    setLastDonation(lastDonationDate.toLocaleDateString());
+
+    const nextDonationDate = new Date(
+      lastDonationDate.setMonth(lastDonationDate.getMonth() + 2)
+    );
+
+    setNextDonation(nextDonationDate.toLocaleDateString());
+  };
+
+  useEffect(() => {
+    getLastDonation();
+  }, []);
+
   const userImgUrl = `http://localhost:3000/uploads/${user?.photo}`;
 
   return (
@@ -89,10 +114,10 @@ const Sidebar = ({ children }: IProps) => {
             </Box>
             <Box>
               <Typography sx={{ color: "#fff", fontWeight: "bold" }}>
-                Last Donation: 00/00/00
+                Ultima Doação: {lastDonation}
               </Typography>
               <Typography sx={{ color: "#fff", fontWeight: "bold" }}>
-                Next Donation: 00/00/00
+                Proxima Doação: {nextDonation}
               </Typography>
             </Box>
           </Box>

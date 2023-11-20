@@ -112,10 +112,15 @@ const SignUp = () => {
 
       const response = await api.post("/file", formData);
 
+      console.log(response.data);
+
+      data.photo = response.data;
+      delete data.confirmPassword;
+      await api.post("/auth/signup", data);
 
       navigate("/signin");
     } catch (error) {
-      //setError(error.response.data.message);
+      console.log(error);
     }
   };
 
