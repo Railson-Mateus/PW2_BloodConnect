@@ -12,7 +12,6 @@ export class CreateUserService implements ICreateUserService {
   async execute(
     data: CreateUserDto
   ): Promise<Omit<Required<IUser>, "password">> {
-    
     const userExists = await this.prisma.user.findUnique({
       where: {
         email: data.email,
@@ -32,7 +31,7 @@ export class CreateUserService implements ICreateUserService {
 
       return userCreated;
     } catch (error) {
-      throw new ApiError("User not created", 500);
+      throw new ApiError(error.message, 500);
     }
   }
 }
