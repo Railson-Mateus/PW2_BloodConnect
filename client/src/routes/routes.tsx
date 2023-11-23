@@ -9,8 +9,9 @@ import { useSidebarContext } from "@/hooks/useSidebarContext";
 import SignIn from "@/pages/SignIn";
 import SignUp from "@/pages/SignUp";
 import Home from "@/pages/User/Home";
-import Profile from "@/pages/User/Profile"
+import Profile from "@/pages/User/Profile";
 import { useEffect } from "react";
+import HomeAdmin from "@/pages/Admin/Home/HomeAdmin";
 
 const Router = () => {
   const { user } = useAuth();
@@ -53,7 +54,7 @@ const Router = () => {
       <Route path="/" element={isLogged ? <MainLayout /> : <DefaultLayout />}>
         {isLogged ? (
           <>
-            <Route path="/home" element={<Home />} />
+            <Route path="/home" element={isAdmin ? <HomeAdmin /> : <Home />} />
             <Route path="/profile" element={<Profile />} />
           </>
         ) : (

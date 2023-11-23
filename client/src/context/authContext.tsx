@@ -23,13 +23,11 @@ const AuthProvider = ({ children }: IProps) => {
     }
   };
 
-  const login = async ({ email, password, admin }: ILoginRequest) => {
-    const urlLogin: string = admin ? "/auth/admin/signin" : "/auth/signin";
-
+  const login = async ({ email, password }: ILoginRequest) => {
     try {
       const data = { email, password };
 
-      const response = await api.post(urlLogin, data);
+      const response = await api.post("/auth/signin", data);
       const { token, user } = response.data as ILoginResponse;
 
       localStorage.setItem("auth.token", token);
@@ -42,7 +40,6 @@ const AuthProvider = ({ children }: IProps) => {
   };
 
   useEffect(() => {
-    
     const token = localStorage.getItem("auth.token");
     const user = localStorage.getItem("auth.user");
 

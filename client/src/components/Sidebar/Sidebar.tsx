@@ -60,7 +60,7 @@ const Sidebar = ({ children }: IProps) => {
   };
 
   useEffect(() => {
-    getLastDonation();
+    if (!user?.isAdmin) getLastDonation();
   }, []);
 
   const userImgUrl = `http://localhost:3000/uploads/${user?.photo}`;
@@ -91,7 +91,13 @@ const Sidebar = ({ children }: IProps) => {
           >
             <img className={styles.img} src={Logo} alt="Logo BloodConnect" />
           </Toolbar>
-          <Box height={135} mt={2} p={1} bgcolor={theme.palette.primary.main}>
+          <Box
+            height={135}
+            mt={2}
+            p={1}
+            bgcolor={theme.palette.primary.main}
+            display={user?.isAdmin ? "flex" : "block"}
+          >
             <Box display={"flex"} alignItems={"center"} mb={1}>
               <Avatar
                 sx={{ height: theme.spacing(7), width: theme.spacing(7) }}
@@ -107,19 +113,27 @@ const Sidebar = ({ children }: IProps) => {
                 >
                   {user?.name}
                 </Typography>
-                <Typography sx={{ color: "#fff", fontWeight: "bold", ml: 1 }}>
-                  Tipo Sanguineo: {user?.bloodType}
-                </Typography>
+                {user?.isAdmin ? (
+                  <Typography sx={{ color: "#fff", fontWeight: "bold", ml: 1 }}>
+                    Admin
+                  </Typography>
+                ) : (
+                  <Typography sx={{ color: "#fff", fontWeight: "bold", ml: 1 }}>
+                    Tipo Sanguineo: {user?.bloodType}
+                  </Typography>
+                )}
               </Box>
             </Box>
-            <Box>
-              <Typography sx={{ color: "#fff", fontWeight: "bold" }}>
-                Ultima Doação: {lastDonation}
-              </Typography>
-              <Typography sx={{ color: "#fff", fontWeight: "bold" }}>
-                Proxima Doação: {nextDonation}
-              </Typography>
-            </Box>
+            {user?.isAdmin ?? (
+              <Box>
+                <Typography sx={{ color: "#fff", fontWeight: "bold" }}>
+                  Ultima Doação: {lastDonation}
+                </Typography>
+                <Typography sx={{ color: "#fff", fontWeight: "bold" }}>
+                  Proxima Doação: {nextDonation}
+                </Typography>
+              </Box>
+            )}
           </Box>
 
           <List component="nav">

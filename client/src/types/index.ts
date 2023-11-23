@@ -3,7 +3,6 @@ import { User } from "@/models/User";
 export interface ILoginRequest {
   email: string;
   password: string;
-  admin: boolean;
 }
 
 export interface ILoginResponse {

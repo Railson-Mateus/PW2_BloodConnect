@@ -5,6 +5,7 @@ import { Request, Response, NextFunction } from "express";
 export function isAdmin() {
   return async (req: Request, res: Response, next: NextFunction) => {
     const { userId } = req;
+
     const user = await prisma.user.findUnique({
       where: {
         id: userId,

@@ -67,14 +67,14 @@ const SignIn = () => {
   const { login } = useAuth();
 
   async function handleLogin(data: UserSignInType) {
-    const result = await login({ ...data, admin });
+    const result = await login(data);
 
     if (result) {
       setErrorMessage(result);
       return;
     }
     console.log("login", result);
-    
+
     navigate("/home");
   }
 
