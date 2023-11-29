@@ -1,0 +1,11 @@
+.header {
+    background: linear-gradient(
+      180deg,
+      #e04735 0%,
+      #d13c3e 28.13%,
+      #c03346 54.69%,
+      #bc304a 80.21%,
+      #ad2651 100%
+    );
+    display: flex;
+  }

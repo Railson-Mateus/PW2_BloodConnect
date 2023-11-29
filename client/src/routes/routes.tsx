@@ -13,6 +13,7 @@ import Profile from "@/pages/User/Profile";
 import { useEffect } from "react";
 import HomeAdmin from "@/pages/Admin/Home/HomeAdmin";
 import Donnors from "@/pages/Admin/Donnors";
+import BloodStockAdmin from "@/pages/Admin/BloodStockAdmin";
 
 const Router = () => {
   const { user } = useAuth();
@@ -58,6 +59,7 @@ const Router = () => {
             <Route path="/home" element={isAdmin ? <HomeAdmin /> : <Home />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/donnors" element={<Donnors />} />
+            <Route path="/blood_stock" element={<BloodStockAdmin />} />
           </>
         ) : (
           <>
