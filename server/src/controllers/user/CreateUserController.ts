@@ -29,7 +29,7 @@ export class CreateUserController implements IController {
           : []
       )
       .flat();
-
+    
     if (errors.length > 0) {
       throw new BadRequestError(errors.join(", "));
     }

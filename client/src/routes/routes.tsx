@@ -12,6 +12,7 @@ import Home from "@/pages/User/Home";
 import Profile from "@/pages/User/Profile";
 import { useEffect } from "react";
 import HomeAdmin from "@/pages/Admin/Home/HomeAdmin";
+import Donnors from "@/pages/Admin/Donnors";
 
 const Router = () => {
   const { user } = useAuth();
@@ -44,10 +45,10 @@ const Router = () => {
       {
         label: isAdmin ? "Donnors" : "Profile",
         icon: isAdmin ? "group" : "person",
-        path: "/profile",
+        path: isAdmin? "/donnors" : "/profile",
       },
     ]);
-  }, []);
+  }, [isAdmin]);
 
   return (
     <Routes>
@@ -56,6 +57,7 @@ const Router = () => {
           <>
             <Route path="/home" element={isAdmin ? <HomeAdmin /> : <Home />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/donnors" element={<Donnors />} />
           </>
         ) : (
           <>
