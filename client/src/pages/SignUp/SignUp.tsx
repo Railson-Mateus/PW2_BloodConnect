@@ -317,9 +317,9 @@ const SignUp = () => {
                   label="Gender"
                   defaultValue=""
                 >
-                  <MenuItem value="Woman">Woman</MenuItem>
-                  <MenuItem value="Men">Men</MenuItem>
-                  <MenuItem value="Other">Other</MenuItem>
+                  <MenuItem value="Feminino">Feminino</MenuItem>
+                  <MenuItem value="Masculino">Masculino</MenuItem>
+                  <MenuItem value="Outro">Outro</MenuItem>
                 </Select>
                 {errors.gender && (
                   <strong style={{ color: "#dd0000" }}>
@@ -329,7 +329,7 @@ const SignUp = () => {
               </FormControl>
               <FormControl sx={{ m: 1, width: "100%" }} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-text">
-                  Blood Type
+                  Tipo sanguineo
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -380,7 +380,7 @@ const SignUp = () => {
                 )}
               </FormControl>
               <FormControl sx={{ m: 1, width: "100%" }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-text">Phone</InputLabel>
+                <InputLabel htmlFor="outlined-adornment-text">Telefone</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-phone"
                   type={"number"}

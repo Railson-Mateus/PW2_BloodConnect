@@ -1,22 +1,37 @@
 import { useAuth } from "@/hooks/useAuth"
 import {api} from "@/api/axios"
 import { Box, Typography, Avatar, Stack, Card, CardContent} from "@mui/material"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
+import { IDonation } from "@/models/Donation";
 
 const Profile = () => {
   const { user } = useAuth()
 
-  const getLastDonation = async () => {
-    const response = await api.get(`/${user?.id}/latest-donation`)
+  let dateOfBirth = user?.dateOfBirth
+  dateOfBirth = new Date(dateOfBirth) 
 
-    console.log(response)
-  }
+  const [lastDonation, setLastDonation] = useState<string>("");
+  const [nextDonation, setNextDonation] = useState<string>("");
+
+  const getLastDonation = async () => {
+    const response = await api.get(`/user/${user?.id}/latest-donation`);
+
+    const lastDonation = response.data as IDonation;
+
+    const lastDonationDate = new Date(lastDonation.date);
+
+    setLastDonation(lastDonationDate.toLocaleDateString());
+
+    const nextDonationDate = new Date(
+      lastDonationDate.setMonth(lastDonationDate.getMonth() + 2)
+    );
+
+    setNextDonation(nextDonationDate.toLocaleDateString());
+  };
 
   useEffect(() => {
     getLastDonation()
-    // console.log(lastDonation);
-    
   }, [])
   
   return (
@@ -47,15 +62,15 @@ const Profile = () => {
         </Typography>
 
        <Typography sx={{fontSize:30}}>
-       Data de Nascimento:  
+       Data de Nascimento: {dateOfBirth.toLocaleDateString()}
        </Typography>
 
        <Typography sx={{fontSize:30}}>
-        Última doação: 
+        Última doação: {lastDonation ? lastDonation : "Você ainda não fez doações"}
         </Typography>
 
        <Typography sx={{fontSize:30}}>
-        Próxima doação: 
+        Próxima doação: {nextDonation ? nextDonation : "Você ainda não fez doações"}
         </Typography>
     </CardContent>
       </Card>
