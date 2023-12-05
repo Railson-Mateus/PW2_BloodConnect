@@ -148,8 +148,8 @@ const SignUp = () => {
   return (
     <Box
       sx={{
-        width: "40rem",
-        height: "40rem",
+        width: "38rem",
+        height: "38rem",
         borderRadius: 3,
         bgcolor: "#fff",
         display: "flex",
@@ -380,7 +380,9 @@ const SignUp = () => {
                 )}
               </FormControl>
               <FormControl sx={{ m: 1, width: "100%" }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-text">Telefone</InputLabel>
+                <InputLabel htmlFor="outlined-adornment-text">
+                  Telefone
+                </InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-phone"
                   type={"number"}

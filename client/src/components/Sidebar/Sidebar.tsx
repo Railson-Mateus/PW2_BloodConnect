@@ -48,15 +48,17 @@ const Sidebar = ({ children }: IProps) => {
 
     const lastDonation = response.data as IDonation;
 
-    const lastDonationDate = new Date(lastDonation.date);
+    if (lastDonation) {
+      const lastDonationDate = new Date(lastDonation.date);
 
-    setLastDonation(lastDonationDate.toLocaleDateString());
+      setLastDonation(lastDonationDate.toLocaleDateString());
 
-    const nextDonationDate = new Date(
-      lastDonationDate.setMonth(lastDonationDate.getMonth() + 2)
-    );
+      const nextDonationDate = new Date(
+        lastDonationDate.setMonth(lastDonationDate.getMonth() + 2)
+      );
 
-    setNextDonation(nextDonationDate.toLocaleDateString());
+      setNextDonation(nextDonationDate.toLocaleDateString());
+    }
   };
 
   useEffect(() => {

@@ -56,7 +56,6 @@ donationRoutes.delete(
 donationRoutes.get(
   "/",
   ensuredAuthenticated(),
-  isAdmin(),
   async (req: Request, res: Response) => {
     const getAllDonationService = new GetAllDonationService(prisma);
 

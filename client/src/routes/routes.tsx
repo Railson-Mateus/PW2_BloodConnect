@@ -46,28 +46,26 @@ const Router = () => {
       {
         label: isAdmin ? "Donnors" : "Profile",
         icon: isAdmin ? "group" : "person",
-        path: isAdmin? "/donnors" : "/profile",
+        path: isAdmin ? "/donnors" : "/profile",
       },
     ]);
   }, [isAdmin]);
 
   return (
     <Routes>
-      <Route path="/" element={isLogged ? <MainLayout /> : <DefaultLayout />}>
-        {isLogged ? (
-          <>
-            <Route path="/home" element={isAdmin ? <HomeAdmin /> : <Home />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/donnors" element={<Donnors />} />
-            <Route path="/blood_stock" element={<BloodStockAdmin />} />
-          </>
-        ) : (
-          <>
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-          </>
-        )}
-      </Route>
+      {isLogged ? (
+        <Route path="/" element={<MainLayout />}>
+          <Route path="/home" element={isAdmin ? <HomeAdmin /> : <Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/donnors" element={<Donnors />} />
+          <Route path="/blood_stock" element={<BloodStockAdmin />} />
+        </Route>
+      ) : (
+        <Route element={<DefaultLayout />}>
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Route>
+      )}
     </Routes>
   );
 };
