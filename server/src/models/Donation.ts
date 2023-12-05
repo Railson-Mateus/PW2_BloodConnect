@@ -1,9 +1,9 @@
 export interface IDonation {
-  id: string;
+  id?: string;
   date: Date;
   donorId: string;
   bloodType: string;
   amount: number;
-  createdAt: Date;
-  updatedAt: Date | null;
+  createdAt?: Date;
+  updatedAt?: Date | null;
 }
