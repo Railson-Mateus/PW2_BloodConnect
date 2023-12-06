@@ -10,6 +10,7 @@ import SignIn from "@/pages/SignIn";
 import SignUp from "@/pages/SignUp";
 import Home from "@/pages/User/Home";
 import Profile from "@/pages/User/Profile";
+import Campaign from "@/pages/User/Campaign";
 import { useEffect } from "react";
 import HomeAdmin from "@/pages/Admin/Home/HomeAdmin";
 import Donnors from "@/pages/Admin/Donnors";
@@ -57,6 +58,7 @@ const Router = () => {
         <Route path="/" element={<MainLayout />}>
           <Route path="/home" element={isAdmin ? <HomeAdmin /> : <Home />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/campaign" element={<Campaign />} />
           <Route path="/donnors" element={<Donnors />} />
           <Route path="/blood_stock" element={<BloodStockAdmin />} />
         </Route>

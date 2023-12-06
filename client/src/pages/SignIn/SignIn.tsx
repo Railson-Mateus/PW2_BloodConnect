@@ -27,7 +27,7 @@ import styles from "./SignIn.module.css";
 const ButtonCustomized = styled(Button)<ButtonProps>(() => ({
   color: "#fff",
   borderRadius: "0.25rem",
-  width: "36ch",
+  width: "33ch",
   height: "3.5rem",
   padding: "0.625rem 1.5rem",
   justifyContent: "center",
@@ -83,8 +83,10 @@ const SignIn = () => {
   return (
     <Box
       sx={{
-        width: "34rem",
-        height: "38rem",
+        width: "40%",
+        height: "75vh",
+        minWidth: "20rem",
+        minHeight: "32rem",
         borderRadius: 3,
         bgcolor: "#fff",
         display: "flex",
@@ -92,6 +94,7 @@ const SignIn = () => {
         justifyContent: "center",
         alignItems: "center",
         boxShadow: 3,
+        margin: "auto",
       }}
       gap={4}
     >
