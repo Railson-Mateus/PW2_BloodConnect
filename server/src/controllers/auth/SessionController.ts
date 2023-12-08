@@ -10,8 +10,6 @@ export class SessionController implements IController {
   async handle(httpRequest: HttpRequest<RequestUser>): Promise<unknown> {
     const { email, password } = httpRequest as RequestUser;
 
-    console.log(email, password);
-
     const validations = await validate({ email, password });
 
     if (validations.length) {
@@ -26,7 +24,7 @@ export class SessionController implements IController {
 
       throw new BadRequestError("Invalid password or email");
     }
-
+    
     const result = await this.sessionService.execute({ email, password });
 
     return result;
