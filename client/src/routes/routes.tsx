@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import { useAuth } from "@/hooks/useAuth";
 
@@ -64,6 +64,7 @@ const Router = () => {
         </Route>
       ) : (
         <Route element={<DefaultLayout />}>
+          <Route index element={<Navigate to="/signin" />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
         </Route>

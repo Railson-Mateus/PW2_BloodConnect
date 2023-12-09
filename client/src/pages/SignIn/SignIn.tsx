@@ -12,6 +12,8 @@ import {
   OutlinedInput,
   Typography,
   styled,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -80,10 +82,13 @@ const SignIn = () => {
 
   const handleClickNewUser = () => navigate("/signup");
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("lg"));
+
   return (
     <Box
       sx={{
-        width: "40%",
+        width: isSmallScreen ? "58%" : "38%",
         height: "75vh",
         minWidth: "20rem",
         minHeight: "32rem",

@@ -18,10 +18,8 @@ export interface User {
 }
 
 export const UserSchemaSignIn = z.object({
-  email: z.string().email({ message: "error: email inválido" }),
-  password: z
-    .string()
-    .min(6, { message: "Error: password menor a 6 caracteres" }),
+  email: z.string().email({ message: "email inválido" }),
+  password: z.string().min(6, { message: "password menor a 6 caracteres" }),
 });
 
 export type UserSignInType = z.infer<typeof UserSchemaSignIn>;
@@ -32,23 +30,29 @@ export const UserSchemaSignUp = z
     email: z
       .string()
       .min(1, { message: "email obrigatório" })
-      .email({ message: "error: email inválido" }),
+      .email({ message: "email inválido" }),
     password: z
       .string()
-      .min(6, { message: "Error: password tem que ter 6 ou mais caracteres" }),
+      .min(6, { message: "password tem que ter 6 ou mais caracteres" }),
     confirmPassword: z
       .string()
       .min(6, { message: "confirmar senha obrigatório" }),
-    phone: z.optional(z.string()),
-    dateOfBirth: z.string(),
-    photo: z.any(),
+    phone: z.string().min(1, { message: "O telefone é obrigatorio" }),
+    dateOfBirth: z
+      .string()
+      .min(1, { message: "Data de nascimento é obrigatorio" }),
+    photo: z.optional(z.any()),
     gender: z.optional(z.string()),
-    bloodType: z.string(),
-    termsOfUseAccepted: z.boolean(),
-    privacyPolicy: z.boolean(),
+    bloodType: z.string().min(2, { message: "Tipo sanguineo é obrigatorio" }),
+    termsOfUseAccepted: z.boolean({
+      required_error: "Termos de uso é obrigatorio",
+    }),
+    privacyPolicy: z.boolean({
+      required_error: "Politica de privacidade é obrigatorio",
+    }),
   })
   .refine(({ password, confirmPassword }) => password === confirmPassword, {
-    message: "Errors: Passwords não são iguais",
+    message: "Passwords não são iguais",
     path: ["confirmPassword"],
   });
 
