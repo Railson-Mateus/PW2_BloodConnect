@@ -43,7 +43,7 @@ const Profile = () => {
          }}} alt="Débora Camilly" src="./src/assets/homem.png"/>
          <Typography sx={{fontSize:30}}>{user?.email}</Typography>
       </Stack>
-       <Card variant="outlined" sx={{justifyContent:"center",width:800, height:500, alignSelf: "center", borderRadius:5, bgcolor:"rgba(217,217,217,0.4)"}}>
+       <Card variant="outlined" sx={{justifyContent:"center",width:800, height:500, alignSelf: "center", borderRadius:2, bgcolor:"rgba(217,217,217,0.4)"}}>
        <CardContent sx={{}}>
        <Typography sx={{margimTop:10,textAlign:"center", fontSize:40, fontStyle:"italic", marginBottom:5}}>
         Tipo Sanguíneo: {user?.bloodType}

@@ -30,6 +30,7 @@ const AuthProvider = ({ children }: IProps) => {
       const response = await api.post("/auth/signin", data);
       const { token, user } = response.data as ILoginResponse;
 
+      console.log(token, user)
       localStorage.setItem("auth.token", token);
       localStorage.setItem("auth.user", JSON.stringify(user));
 
