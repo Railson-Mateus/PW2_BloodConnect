@@ -59,13 +59,13 @@ export class UpdateCampaignDto {
   @IsOptional()
   local!: string;
 
-  @IsDate()
+  @IsString()
   @IsOptional()
-  startDate!: Date;
+  startDate!: string;
 
-  @IsDate()
+  @IsString()
   @IsOptional()
-  endDate!: Date;
+  endDate!: string;
 
   @IsDate()
   @IsOptional()

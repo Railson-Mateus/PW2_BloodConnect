@@ -8,7 +8,7 @@ class GenerateToken {
     const token = sign({ userId, admin }, secretKey, {
       subject: userId,
 
-      expiresIn: "1h",
+      expiresIn: "10h",
     });
 
     return token;

@@ -1,4 +1,4 @@
-import { string, z } from "zod";
+import { z } from "zod";
 
 export interface ICampaign {
   id: string;
@@ -6,8 +6,8 @@ export interface ICampaign {
   image: string;
   description: string;
   local: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | string;
+  endDate: Date | string;
   createdAt: Date;
   updatedAt: Date | null;
 }
