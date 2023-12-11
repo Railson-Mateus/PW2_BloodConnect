@@ -1,10 +1,37 @@
-import styles from "./Home.module.css";
+import { api } from "@/api/axios";
+import CarrouselImage from "@/components/Carrousel";
+import { ICampaign } from "@/models/Campaign";
+import { Box } from "@mui/material";
+import { useEffect, useState } from "react";
+import BloodStockHeader from "@/components/BloodStockHeader";
 
 const Home = () => {
+  const [campaigns, setCampaigns] = useState<ICampaign[]>([] as ICampaign[]);
+
+  const getCampanhas = async () => {
+    try {
+      const response = await api.get("/campaign");
+      const campaigns = response.data;
+
+      setCampaigns(campaigns);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getCampanhas();
+  }, []);
+
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Home</h1>
-    </div>
+    <Box
+      sx={{
+        width: "100%",
+      }}
+    >
+      <BloodStockHeader />
+      <CarrouselImage campaigns={campaigns} />
+    </Box>
   );
 };
 

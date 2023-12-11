@@ -30,11 +30,6 @@ const Router = () => {
         path: "/home",
       },
       {
-        label: "Agenda",
-        icon: "view_agenda",
-        path: "/agenda",
-      },
-      {
         label: "Blood Stock",
         icon: "inventory_2",
         path: "/blood_stock",

@@ -8,6 +8,7 @@ export interface ILoginRequest {
 export interface ILoginResponse {
   token: string;
   user: User;
+  expiresIn: number;
 }
 
 export interface IContextAuth {

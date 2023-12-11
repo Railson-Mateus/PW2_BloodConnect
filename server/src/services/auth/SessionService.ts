@@ -9,6 +9,7 @@ import { compare } from "bcrypt";
 type IResponse = {
   token: string;
   user: IUser;
+  expiresIn: number;
 };
 
 export class SessionService implements IService<RequestUser, IResponse> {
@@ -25,8 +26,7 @@ export class SessionService implements IService<RequestUser, IResponse> {
         email,
       },
     });
-    console.log("here");
-    
+
     if (!user) {
       throw new NotFoundError("User or Password incorrect!");
     }
@@ -40,9 +40,8 @@ export class SessionService implements IService<RequestUser, IResponse> {
     const userId = user.id;
     delete user.password;
 
-    
     const token = await this.generateToken.execute(userId, user.isAdmin);
 
-    return { token, user };
+    return { token, user, expiresIn: 3600 };
   }
 }

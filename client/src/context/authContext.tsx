@@ -17,6 +17,7 @@ const AuthProvider = ({ children }: IProps) => {
     try {
       localStorage.removeItem("auth.token");
       localStorage.removeItem("auth.user");
+      localStorage.removeItem("auth.expirationDate");
       setUser(null);
     } catch (error) {
       console.log(error);
@@ -28,11 +29,13 @@ const AuthProvider = ({ children }: IProps) => {
       const data = { email, password };
 
       const response = await api.post("/auth/signin", data);
-      const { token, user } = response.data as ILoginResponse;
+      const { token, user, expiresIn } = response.data as ILoginResponse;
 
-      console.log(token, user)
+      const expirationDate = new Date(Date.now() + expiresIn * 1000);
+
       localStorage.setItem("auth.token", token);
       localStorage.setItem("auth.user", JSON.stringify(user));
+      localStorage.setItem("auth.expirationDate", expirationDate.toISOString());
 
       setUser(user);
     } catch (error) {
@@ -40,7 +43,24 @@ const AuthProvider = ({ children }: IProps) => {
     }
   };
 
+  const isTokenExpired = () => {
+    const expirationDate = localStorage.getItem("auth.expirationDate");
+    if (!expirationDate) {
+      return true;
+    }
+
+    const now = new Date();
+    return now > new Date(expirationDate);
+  };
+
+  const checkTokenExpiration = () => {
+    if (isTokenExpired()) {
+      logout();
+    }
+  };
+
   useEffect(() => {
+    checkTokenExpiration();
     const token = localStorage.getItem("auth.token");
     const user = localStorage.getItem("auth.user");
 

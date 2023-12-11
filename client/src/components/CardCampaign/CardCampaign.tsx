@@ -1,42 +1,28 @@
-import { CampaignSchemaUpdate, CampaignUpdateType, ICampaign } from "@/models/Campaign";
-import { zodResolver } from "@hookform/resolvers/zod";
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import { ICampaign } from "@/models/Campaign";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import {
-  Box,
   Button,
   Card,
   CardContent,
   CardMedia,
-  FormControl,
-  InputAdornment,
-  InputLabel,
-  Modal,
-  OutlinedInput,
   Typography,
 } from "@mui/material";
-import { register } from "module";
-import { useForm } from "react-hook-form";
 
 interface IProps {
-  campaign: ICampaign,
-  handleOpen: (campaign: ICampaign) => void;
+  campaign: ICampaign;
+  handleOpen?: (campaign: ICampaign) => void;
 }
 
-const CardCampaign = ({
-  campaign,
-  handleOpen,
-}: IProps) => {
+const CardCampaign = ({ campaign, handleOpen }: IProps) => {
   const dateStart = new Date(campaign.startDate);
   const dateEnd = new Date(campaign.endDate);
 
   const userImgUrl = `http://localhost:3000/uploads/${campaign?.image}`;
 
   const handleEdit = () => {
-    handleOpen(campaign)
-  }
+    handleOpen(campaign);
+  };
 
   return (
     <>
