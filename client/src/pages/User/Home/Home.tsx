@@ -21,7 +21,7 @@ const Home = () => {
 
   useEffect(() => {
     getCampanhas();
-  }, []);
+  }, [campaigns]);
 
   return (
     <Box

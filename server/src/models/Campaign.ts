@@ -4,8 +4,8 @@ export interface ICampaign {
   image: string;
   description: string;
   local: string;
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate: Date;
   createdAt?: Date;
   updatedAt?: Date | null;
 }

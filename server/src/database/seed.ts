@@ -3,42 +3,42 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "./prismaClient";
 import { IDonation } from "@/models/Donation";
 
-// async function seedUser() {
-//   //await prisma.user.deleteMany();
-//   const generateUserData = (): Prisma.UserCreateInput => ({
-//     name: faker.internet.userName(),
-//     email: faker.internet.email(),
-//     password: faker.internet.password(),
-//     bloodType: faker.helpers.arrayElement([
-//       "A+",
-//       "B+",
-//       "AB+",
-//       "O+",
-//       "A-",
-//       "B-",
-//       "AB-",
-//       "O-",
-//     ]),
-//     gender: faker.person.sexType(),
-//     photo: faker.image.avatar(),
-//     dateOfBirth: faker.date.birthdate(),
-//     phone: faker.phone.imei(),
-//     isAdmin: false,
-//     termsOfUseAccepted: true,
-//     privacyPolicy: true,
-//   });
+async function seedUser() {
+  //await prisma.user.deleteMany();
+  const generateUserData = (): Prisma.UserCreateInput => ({
+    name: faker.internet.userName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+    bloodType: faker.helpers.arrayElement([
+      "A+",
+      "B+",
+      "AB+",
+      "O+",
+      "A-",
+      "B-",
+      "AB-",
+      "O-",
+    ]),
+    gender: faker.person.sexType(),
+    photo: faker.image.avatar(),
+    dateOfBirth: faker.date.birthdate(),
+    phone: faker.phone.imei(),
+    isAdmin: false,
+    termsOfUseAccepted: true,
+    privacyPolicy: true,
+  });
 
-//   const usersData: Prisma.UserCreateInput[] = Array.from(
-//     { length: 5 },
-//     generateUserData
-//   );
+  const usersData: Prisma.UserCreateInput[] = Array.from(
+    { length: 30 },
+    generateUserData
+  );
 
-//   await prisma.user.createMany({
-//     data: usersData,
-//   });
+  await prisma.user.createMany({
+    data: usersData,
+  });
 
-//   console.log("Seed data User inserted successfully");
-// }
+  console.log("Seed data User inserted successfully");
+}
 
 async function seedCampaign() {
   await prisma.campaign.deleteMany();
@@ -60,7 +60,7 @@ async function seedCampaign() {
   });
 
   const campaignData: Prisma.CampaignCreateInput[] = Array.from(
-    { length: 10 },
+    { length: 5 },
     generateCampaignData
   );
 
@@ -98,7 +98,7 @@ async function seedDonation() {
     };
 
   const donationPromises: Promise<Prisma.DonationCreateManyInput>[] =
-    Array.from({ length: 5 }, () => generateDonationData());
+    Array.from({ length: 50 }, () => generateDonationData());
 
   const donationsData: Prisma.DonationCreateManyInput[] = await Promise.all(
     donationPromises
@@ -111,13 +111,13 @@ async function seedDonation() {
   console.log("Seed data Donation inserted successfully");
 }
 
-// seedUser()
-//   .catch((error) => {
-//     throw error;
-//   })
-//   .finally(async () => {
-//     await prisma.$disconnect();
-//   });
+seedUser()
+  .catch((error) => {
+    throw error;
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
 
 seedCampaign()
   .catch((error) => {

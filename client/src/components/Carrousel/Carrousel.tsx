@@ -7,8 +7,6 @@ interface IProps {
 }
 
 const CarrouselImage = ({ campaigns }: IProps) => {
-  console.log(campaigns);
-
   return (
     <Carousel
       animation={"slide"}

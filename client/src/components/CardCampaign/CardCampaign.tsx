@@ -1,7 +1,9 @@
+import { useAuth } from "@/hooks/useAuth";
 import { ICampaign } from "@/models/Campaign";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
+  Box,
   Button,
   Card,
   CardContent,
@@ -12,9 +14,11 @@ import {
 interface IProps {
   campaign: ICampaign;
   handleOpen?: (campaign: ICampaign) => void;
+  handleDelete?: (id: string) => void;
 }
 
-const CardCampaign = ({ campaign, handleOpen }: IProps) => {
+const CardCampaign = ({ campaign, handleOpen, handleDelete }: IProps) => {
+  const { user } = useAuth();
   const dateStart = new Date(campaign.startDate);
   const dateEnd = new Date(campaign.endDate);
 
@@ -22,6 +26,10 @@ const CardCampaign = ({ campaign, handleOpen }: IProps) => {
 
   const handleEdit = () => {
     handleOpen(campaign);
+  };
+
+  const handleDeleteCampaign = () => {
+    handleDelete(campaign.id);
   };
 
   return (
@@ -33,10 +41,16 @@ const CardCampaign = ({ campaign, handleOpen }: IProps) => {
           backgroundColor: "rgba(217,217,217,0.2)",
         }}
       >
-        <DeleteIcon sx={{ float: "right", marginTop: 1 }} />
-        <Button sx={{ color: "black" }} onClick={handleEdit}>
-          <CreateIcon sx={{ float: "right", marginTop: 1 }} />
-        </Button>
+        {user?.isAdmin && (
+          <Box display={"flex"} justifyContent={"space-between"}>
+            <Button sx={{ color: "black" }} onClick={handleEdit}>
+              <CreateIcon sx={{ float: "right", marginTop: 1 }} />
+            </Button>
+            <Button sx={{ color: "black" }} onClick={handleDeleteCampaign}>
+              <DeleteIcon sx={{ float: "right", marginTop: 1 }} />
+            </Button>
+          </Box>
+        )}
         <CardMedia
           component="img"
           sx={{ marginTop: 2, objectFit: "contain", height: 140 }}

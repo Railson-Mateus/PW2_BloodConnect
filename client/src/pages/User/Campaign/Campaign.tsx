@@ -25,6 +25,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import campaign from "../../../assets/campaign.png";
+import moment from "moment";
 
 const Campaign = () => {
   const { user } = useAuth();
@@ -35,27 +36,33 @@ const Campaign = () => {
     [] as ICampaign[]
   );
 
-  const navigate = useNavigate();
-
   const getCampanhas = async () => {
     try {
       const response = await api.get("/campaign");
       const campaigns = response.data;
 
       setCampaigns(campaigns);
-      navigate("/campaign");
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleDelete = async (id: string) => {
-    console.log(id);
+    try {
+      const confirmExclusion = confirm("Deseja excluir a campanha?");
+      if (confirmExclusion) {
+        await api.delete(`/campaign/${id}`);
+
+        alert("Campanha excluida com sucesso!");
+        getCampanhas();
+      }
+    } catch (error) {
+      alert("Error ao tentar excluir!");
+    }
   };
 
   const handleClose = () => {
     setSelectedCampaign(null);
-    console.log("Close", selectedCampaign);
     setOpen(false);
   };
 
@@ -85,9 +92,15 @@ const Campaign = () => {
         data.image = response.data;
       }
 
-      const result = await api.patch(`/campaign/${selectedCampaign?.id}`, data);
+      data.startDate = moment(data.startDate, "DD/MM/YYYY").format();
+      data.endDate = moment(data.endDate, "DD/MM/YYYY").format();
+
+      await api.patch(`/campaign/${selectedCampaign?.id}`, data);
+
+      alert("Campanha atualizada com sucesso!");
+      handleClose();
     } catch (error) {
-      console.log(error);
+      alert("Error ao atualizar a campanha!");
     }
   };
 
@@ -152,6 +165,7 @@ const Campaign = () => {
         <CardCampaign
           key={campaign.id}
           handleOpen={handleOpen}
+          handleDelete={handleDelete}
           campaign={campaign}
         />
       ))}
@@ -163,7 +177,7 @@ const Campaign = () => {
       >
         <Box
           sx={{
-            position: "absolute" as "absolute",
+            position: "absolute",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",

@@ -15,8 +15,12 @@ export class UpdateCampaignController implements IController {
 
   async handle(httpRequest: HttpRequest<IUpdateCampaign>): Promise<ICampaign> {
     const { id } = httpRequest.params;
+    const camapign = httpRequest.body;
 
-    const data = plainToClass(UpdateCampaignDto, httpRequest.body);
+    const data = plainToClass(UpdateCampaignDto, camapign);
+
+    data.startDate = new Date(data.startDate);
+    data.endDate = new Date(data.endDate);
 
     const validations: ValidationError[] = await validate(data);
 
