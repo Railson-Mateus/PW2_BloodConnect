@@ -11,6 +11,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import {
+  Avatar,
   Box,
   Button,
   FormControl,
@@ -125,6 +126,8 @@ const Campaign = () => {
     <Box
       sx={{
         width: "100%",
+        height: "100%",
+        pb: 5,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -144,7 +147,12 @@ const Campaign = () => {
           justifyContent: "space-around",
         }}
       >
-        <img src={campaign} alt="imagem de campanha" />
+        <Avatar
+          sx={{ width: 128, height: 128 }}
+          src={campaign}
+          alt="imagem de campanha"
+        />
+
         <Typography
           sx={{
             fontSize: 40,

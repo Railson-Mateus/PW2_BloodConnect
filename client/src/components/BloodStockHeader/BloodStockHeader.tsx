@@ -86,7 +86,15 @@ const BloodStockHeader = () => {
             </Typography>
           </Grid>
 
-          <Grid item xs={12} md={9}>
+          <Grid
+            item
+            xs={12}
+            md={9}
+            sx={{
+              display: "flex",
+              justifyContent: "space-evenly",
+            }}
+          >
             {rawData.map((value) => (
               <BloodLevel nivel={value[1]} tipo={value[0]} />
             ))}

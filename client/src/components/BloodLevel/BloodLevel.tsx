@@ -36,18 +36,13 @@ const BloodLevel = ({ tipo, nivel }: IProps) => {
       <Grid key={tipo} item>
         <Box
           className={styles.container}
-          width={isSmallScreen ? "30px" : "140px"}
+          width={isSmallScreen ? "30px" : "64px"}
         >
           <Typography color={"white"} fontWeight={700} fontSize={"1rem"}>
             {tipo}
           </Typography>
           <img src={`src/assets/${status}.png`} />
-          <Typography
-            color={"white"}
-            fontWeight={600}
-            fontSize={".5rem"}
-            mt={1}
-          >
+          <Typography color={"white"} fontWeight={600} fontSize={"1rem"} mt={1}>
             {status}
           </Typography>
         </Box>

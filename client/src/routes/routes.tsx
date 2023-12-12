@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import HomeAdmin from "@/pages/Admin/Home/HomeAdmin";
 import Donnors from "@/pages/Admin/Donnors";
 import BloodStockAdmin from "@/pages/Admin/BloodStockAdmin";
+import BloodStock from "@/pages/User/BloodStock";
 
 const Router = () => {
   const { user } = useAuth();
@@ -55,7 +56,10 @@ const Router = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/campaign" element={<Campaign />} />
           <Route path="/donnors" element={<Donnors />} />
-          <Route path="/blood_stock" element={<BloodStockAdmin />} />
+          <Route
+            path="/blood_stock"
+            element={isAdmin ? <BloodStockAdmin /> : <BloodStock />}
+          />
         </Route>
       ) : (
         <Route element={<DefaultLayout />}>

@@ -3,13 +3,13 @@ import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const BloodStock = () => {
-    const navigate = useNavigate();
-    const navToCampaign = () => {
-        navigate("/campaign")
-    }
+  const navigate = useNavigate();
+  const navToCampaign = () => {
+    navigate("/campaign");
+  };
 
   return (
-    <Box width={"100vw"}>
+    <Box width={"100%"}>
       <BloodStockHeader />
       <Box
         display={"flex"}
@@ -49,7 +49,9 @@ const BloodStock = () => {
             </Typography>
           </Box>
         </Box>
-            <Button variant="contained" onClick={navToCampaign}>Visualizar campanhas</Button>  
+        <Button variant="contained" onClick={navToCampaign}>
+          Visualizar campanhas
+        </Button>
       </Box>
     </Box>
   );

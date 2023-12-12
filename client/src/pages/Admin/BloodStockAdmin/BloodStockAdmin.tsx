@@ -3,7 +3,7 @@ import { Box, Button, Typography } from "@mui/material";
 
 const BloodStockAdmin = () => {
   return (
-    <Box width={"100vw"}>
+    <Box width={"100%"}>
       <BloodStockHeader />
       <Box
         display={"flex"}
