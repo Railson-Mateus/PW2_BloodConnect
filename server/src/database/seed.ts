@@ -41,7 +41,7 @@ async function seedUser() {
 }
 
 async function seedCampaign() {
-  await prisma.campaign.deleteMany();
+  //await prisma.campaign.deleteMany();
   const endDate = faker.date.past({
     years: 1,
     refDate: "2023-01-01T00:00:00.000Z",
@@ -72,7 +72,7 @@ async function seedCampaign() {
 }
 
 async function seedDonation() {
-  await prisma.donation.deleteMany();
+  //await prisma.donation.deleteMany();
   const getRandomUser = async () => {
     const users = await prisma.user.findMany();
     const randomIndex = Math.floor(Math.random() * users.length);

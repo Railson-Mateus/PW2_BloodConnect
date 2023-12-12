@@ -1,4 +1,11 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
 import styles from "./bloodLevel.module.css";
 interface IProps {
@@ -21,16 +28,26 @@ function getStatus(numero: number) {
 
 const BloodLevel = ({ tipo, nivel }: IProps) => {
   const status = getStatus(nivel);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Button onClick={() => console.log("Click")}>
       <Grid key={tipo} item>
-        <Box className={styles.container}>
-          <Typography color={"white"} fontWeight={700} fontSize={20}>
+        <Box
+          className={styles.container}
+          width={isSmallScreen ? "30px" : "140px"}
+        >
+          <Typography color={"white"} fontWeight={700} fontSize={"1rem"}>
             {tipo}
           </Typography>
           <img src={`src/assets/${status}.png`} />
-          <Typography color={"white"} fontWeight={600} fontSize={16} mt={1}>
+          <Typography
+            color={"white"}
+            fontWeight={600}
+            fontSize={".5rem"}
+            mt={1}
+          >
             {status}
           </Typography>
         </Box>

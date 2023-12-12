@@ -1,18 +1,22 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import styles from "./BloodStockHeader.module.css";
 import BloodLevel from "../BloodLevel";
 import { useEffect, useState } from "react";
 import { IDonation } from "@/models/Donation";
 import { api } from "@/api/axios";
+import moment from "moment";
 
 const BloodStockHeader = () => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [donations, setDonations] = useState<IDonation[]>();
 
   const date = donations?.reduce((maxDate, donation) => {
     return donation.date > maxDate ? donation.date : maxDate;
   }, donations[0].date);
 
-  const latestDonation = new Date(date);
+  const latestDonation = moment(date).format("DD/MM/YYYY");
 
   const getDonations = async () => {
     const response = await api.get("/donation");
@@ -31,7 +35,7 @@ const BloodStockHeader = () => {
         groupedData[bloodType] = amount;
       }
     });
-    // Converter o objeto em um array de arrays
+
     const result: [string, number][] = Object.keys(groupedData).map(
       (bloodType) => [bloodType, groupedData[bloodType]]
     );
@@ -46,37 +50,49 @@ const BloodStockHeader = () => {
   }, []);
 
   return (
-    <Box height={"34%"} className={styles.header}>
-      <Box
-        width={"23.2%"}
-        sx={{
-          padding: 2,
-        }}
-      >
-        <>
-          <Typography color={"#fff"} fontSize={20} fontWeight={600}>
-            Estoque de
-          </Typography>
-          <Typography color={"#fff"} fontSize={46} fontWeight={700}>
-            Sangue
-          </Typography>
-        </>
-        <Typography color={"#fff"} fontSize={14} pt={9}>
-          Estoque atualizado em: {latestDonation.toLocaleDateString()}
-        </Typography>
-      </Box>
-      <Grid container width={"77%"}>
-        <Grid
-          container
-          justifyContent="center"
-          alignItems={"center"}
-          spacing={2}
-        >
-          {rawData.map((value) => (
-            <BloodLevel nivel={value[1]} tipo={value[0]} />
-          ))}
+    <Box p={1} className={styles.header}>
+      {isSmallScreen ? (
+        <Grid container>
+          <Grid item sx={{ display: "flex", flexDirection: "column" }}>
+            <Typography color={"#fff"} fontSize={".8rem"}>
+              Estoque atualizado em: {latestDonation}
+            </Typography>
+          </Grid>
+
+          <Grid
+            item
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+            }}
+          >
+            {rawData.map((value) => (
+              <BloodLevel nivel={value[1]} tipo={value[0]} />
+            ))}
+          </Grid>
         </Grid>
-      </Grid>
+      ) : (
+        <Grid container>
+          <Grid item xs={12} md={3}>
+            <Typography color={"#fff"} fontSize={"1.5rem"} fontWeight={600}>
+              Estoque de
+            </Typography>
+            <Typography color={"#fff"} fontSize={"2.5rem"} fontWeight={700}>
+              Sangue
+            </Typography>
+            <Typography color={"#fff"} fontSize={".8rem"} pt={5}>
+              Estoque atualizado em: {latestDonation}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} md={9}>
+            {rawData.map((value) => (
+              <BloodLevel nivel={value[1]} tipo={value[0]} />
+            ))}
+          </Grid>
+        </Grid>
+      )}
     </Box>
   );
 };

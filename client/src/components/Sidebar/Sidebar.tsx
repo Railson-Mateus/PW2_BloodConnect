@@ -5,6 +5,7 @@ import {
   Button,
   Divider,
   Drawer,
+  IconButton,
   List,
   Toolbar,
   Typography,
@@ -21,6 +22,7 @@ import { useSidebarContext } from "@/hooks/useSidebarContext";
 import { IDonation } from "@/models/Donation";
 import { useNavigate } from "react-router-dom";
 import MenuButtonOption from "../MenuButtonOption";
+import MenuIcon from "@mui/icons-material/Menu";
 
 type IProps = {
   children: ReactNode;
@@ -164,7 +166,25 @@ const Sidebar = ({ children }: IProps) => {
           </Button>
         </Box>
       </Drawer>
-      <Box height="100vh" marginLeft={smDown ? 0 : theme.spacing(32)}>
+      <Box
+        height="100%"
+        width={"100%"}
+        marginLeft={smDown ? 0 : theme.spacing(32)}
+      >
+        <IconButton
+          aria-label="open sidebar"
+          onClick={toggleSidebarOpen}
+          edge="start"
+          sx={{
+            ...((isSidebarOpen || !smDown) && { display: "none" }),
+            position: "fixed",
+
+            ml: 42,
+            color: "#fff",
+          }}
+        >
+          <MenuIcon />
+        </IconButton>
         {children}
       </Box>
     </>
