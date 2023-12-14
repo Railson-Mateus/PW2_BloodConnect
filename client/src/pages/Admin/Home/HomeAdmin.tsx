@@ -43,14 +43,16 @@ const HomeAdmin = () => {
   }, []);
 
   return (
-    <Box width={"100vw"}>
+    <Box height={"68.7%"}>
       <Box
-        height={"32.7%"}
         sx={{
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-evenly",
           alignItems: "center",
+          flexWrap: "wrap",
           padding: 2,
+          mt: 2,
+          gap: 2,
         }}
       >
         <CardComponent
@@ -74,7 +76,9 @@ const HomeAdmin = () => {
           total={donations.length}
         />
       </Box>
-      <Chart donations={donations} />
+      <Box height={"100%"} width={"100%"}>
+        <Chart donations={donations} />
+      </Box>
     </Box>
   );
 };
