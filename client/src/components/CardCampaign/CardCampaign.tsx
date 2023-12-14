@@ -41,6 +41,7 @@ const CardCampaign = ({ campaign, handleOpen, handleDelete }: IProps) => {
           backgroundColor: "rgba(217,217,217,0.2)",
         }}
       >
+        //rend caso for admin
         {user?.isAdmin && (
           <Box display={"flex"} justifyContent={"space-between"}>
             <Button sx={{ color: "black" }} onClick={handleEdit}>

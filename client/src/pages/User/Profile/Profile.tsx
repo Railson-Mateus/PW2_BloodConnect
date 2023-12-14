@@ -7,13 +7,16 @@ import {
   Stack,
   Card,
   CardContent,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useTheme } from "@emotion/react";
 import { IDonation } from "@/models/Donation";
 
 const Profile = () => {
   const { user } = useAuth();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   let dateOfBirth = user?.dateOfBirth;
   dateOfBirth = new Date(dateOfBirth);
@@ -48,15 +51,16 @@ const Profile = () => {
         justifyContent: "center",
         alignItems: "center",
         display: "flex",
-        height: "100vh",
+        height: "100%",
         flexDirection: "column",
+        border: 1
       }}
     >
       <Stack
         direction="column"
         spacing={1}
         alignItems={"center"}
-        marginBottom={3}
+        marginBottom={1}
       >
         <Avatar
           sx={{
@@ -68,15 +72,15 @@ const Profile = () => {
           }}
           alt="Débora Camilly"
           src="./src/assets/homem.png"
-        />
-        <Typography sx={{ fontSize: 30 }}>{user?.email}</Typography>
+        />"
+        <Typography sx={{ fontSize: "1.2rem" }}>{user?.email}</Typography>
       </Stack>
       <Card
         variant="outlined"
         sx={{
           justifyContent: "center",
-          width: 800,
-          height: 500,
+          width: isSmallScreen ? 250 : 500,
+          height: isSmallScreen? 320: 400,
           alignSelf: "center",
           borderRadius: 2,
           bgcolor: "rgba(217,217,217,0.4)",
@@ -87,30 +91,36 @@ const Profile = () => {
             sx={{
               margimTop: 10,
               textAlign: "center",
-              fontSize: 40,
+              fontSize: isSmallScreen ? "1.1rem" : "1.5rem",
               fontStyle: "italic",
-              marginBottom: 5,
+              marginBottom: 1,
             }}
           >
             Tipo Sanguíneo: {user?.bloodType}
           </Typography>
 
-          <Typography sx={{ fontSize: 30 }}>Nome: {user?.name}</Typography>
+          <Typography sx={{fontSize: isSmallScreen ? "1.1rem" : "1.5rem"}}>
+            Nome: {user?.name}
+          </Typography>
 
-          <Typography sx={{ fontSize: 30 }}>Gênero: {user?.gender}</Typography>
+          <Typography sx={{  fontSize: isSmallScreen ? "1.1rem" : "1.5rem", }}>
+            Gênero: {user?.gender}
+          </Typography>
 
-          <Typography sx={{ fontSize: 30 }}>Telefone: {user?.phone}</Typography>
+          <Typography sx={{  fontSize: isSmallScreen ? "1.1rem" : "1.5rem", }}>
+            Telefone: {user?.phone}
+            </Typography>
 
-          <Typography sx={{ fontSize: 30 }}>
+          <Typography sx={{  fontSize: isSmallScreen ? "1.1rem" : "1.5rem", }}>
             Data de Nascimento: {dateOfBirth.toLocaleDateString()}
           </Typography>
 
-          <Typography sx={{ fontSize: 30 }}>
+          <Typography sx={{  fontSize: isSmallScreen ? "1.1rem" : "1.5rem", }}>
             Última doação:{" "}
             {lastDonation ? lastDonation : "Você ainda não fez doações"}
           </Typography>
 
-          <Typography sx={{ fontSize: 30 }}>
+          <Typography sx={{  fontSize: isSmallScreen ? "1.1rem" : "1.5rem", }}>
             Próxima doação:{" "}
             {nextDonation ? nextDonation : "Você ainda não fez doações"}
           </Typography>

@@ -72,6 +72,7 @@ const Campaign = () => {
     setOpen(true);
   };
 
+  //componenteCreate
   const {
     register,
     handleSubmit,
@@ -83,6 +84,7 @@ const Campaign = () => {
 
   const updateCampaign = async (data: CampaignUpdateType) => {
     try {
+     //tirar if
       if (typeof data.image !== "string") {
         const formData = new FormData();
 
@@ -97,7 +99,7 @@ const Campaign = () => {
       data.endDate = moment(data.endDate, "DD/MM/YYYY").format();
 
       await api.patch(`/campaign/${selectedCampaign?.id}`, data);
-
+      
       alert("Campanha atualizada com sucesso!");
       handleClose();
     } catch (error) {
