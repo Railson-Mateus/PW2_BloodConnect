@@ -4,6 +4,8 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import { api } from "@/api/axios";
 import {
+  CampaignCreateType,
+  CampaignSchemaCreate,
   CampaignSchemaUpdate,
   CampaignUpdateType,
   ICampaign,
@@ -41,7 +43,6 @@ const Campaign = () => {
     try {
       const response = await api.get("/campaign");
       const campaigns = response.data;
-
       setCampaigns(campaigns);
     } catch (error) {
       console.log(error);
@@ -58,7 +59,7 @@ const Campaign = () => {
         getCampanhas();
       }
     } catch (error) {
-      alert("Error ao tentar excluir!");
+      alert(`Error ao tentar excluir!, ${error.message}`);
     }
   };
 
@@ -72,7 +73,7 @@ const Campaign = () => {
     setOpen(true);
   };
 
-  //componenteCreate
+  //campaign edit
   const {
     register,
     handleSubmit,
@@ -92,7 +93,8 @@ const Campaign = () => {
 
         const response = await api.post("/file", formData);
 
-        data.image = response.data;
+        data.image = `http://localhost:3000/uploads/${response.data}`;
+
       }
 
       data.startDate = moment(data.startDate, "DD/MM/YYYY").format();
@@ -123,6 +125,71 @@ const Campaign = () => {
     }
     getCampanhas();
   }, [selectedCampaign, setValue]);
+
+//create campaign
+// const handleCloseCreate = () => {
+//   setSelectedCampaign(null);
+//   setOpen(false);
+// };
+
+// const handleOpenCreate = (campaign: ICampaign) => {
+//   setSelectedCampaign(campaign);
+//   setOpen(true);
+// };
+
+
+// const {
+//   registerCreate,
+//   handleSubmitCreate,
+//   setValueCreated,
+//   formState: { errors },
+// } = useForm<CampaignCreateType>({
+//   resolver: zodResolver(CampaignSchemaCreate),
+// });
+
+// const createCampaign = async (data: CampaignCreateType) => {
+//   try {
+//    //tirar if
+//     if (typeof data.image !== "string") {
+//       const formData = new FormData();
+
+//       formData.append("photo", data.image[0]);
+
+//       const response = await api.post("/file", formData);
+
+//       data.image = `http://localhost:3000/uploads/${response.data}`;
+
+//     }
+
+//     data.startDate = moment(data.startDate, "DD/MM/YYYY").format();
+//     data.endDate = moment(data.endDate, "DD/MM/YYYY").format();
+
+//     await api.patch(`/campaign/${selectedCampaign?.id}`, data);
+    
+//     alert("Campanha criada com sucesso!");
+//     handleClose();
+//   } catch (error) {
+//     alert("Error ao criar a campanha!");
+//   }
+// };
+
+// useEffect(() => {
+//   if (selectedCampaign) {
+//     const endDate = new Date(selectedCampaign.endDate).toLocaleDateString();
+//     const startDate = new Date(
+//       selectedCampaign.startDate
+//     ).toLocaleDateString();
+
+//     setValue("title", selectedCampaign.title);
+//     setValue("description", selectedCampaign.description);
+//     setValue("image", selectedCampaign.image);
+//     setValue("startDate", startDate);
+//     setValue("endDate", endDate);
+//     setValue("local", selectedCampaign.local);
+//   }
+//   getCampanhas();
+// }, [selectedCampaign, setValue]);
+
 
   return (
     <Box
@@ -178,7 +245,8 @@ const Campaign = () => {
           handleDelete={handleDelete}
           campaign={campaign}
         />
-      ))}
+        ))}
+
       <Modal
         open={open}
         onClose={handleClose}

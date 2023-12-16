@@ -40,6 +40,7 @@ campaignRoutes.delete(
   ensuredAuthenticated(),
   isAdmin(),
   async (req: Request, res: Response) => {
+    
     const deleteCampaignService = new DeleteCampaignService(prisma);
 
     const deleteCampaignController = new DeleteCampaignController(

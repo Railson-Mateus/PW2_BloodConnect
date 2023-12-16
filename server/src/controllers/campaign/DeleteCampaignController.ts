@@ -6,6 +6,7 @@ export class DeleteCampaignController implements IController {
   async handle(httpRequest: HttpRequest<unknown>): Promise<ICampaign> {
     const { id } = httpRequest.params;
 
+    console.log(id)
     const campaignDeleted = await this.deleteCampaignService.execute(id);
 
     return campaignDeleted;

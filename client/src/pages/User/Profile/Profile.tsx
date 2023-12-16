@@ -71,8 +71,8 @@ const Profile = () => {
             },
           }}
           alt="Débora Camilly"
-          src="./src/assets/homem.png"
-        />"
+          src={`http://localhost:3000/uploads/${user?.photo}`}
+        />
         <Typography sx={{ fontSize: "1.2rem" }}>{user?.email}</Typography>
       </Stack>
       <Card

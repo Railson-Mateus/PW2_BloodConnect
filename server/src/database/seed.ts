@@ -98,7 +98,7 @@ async function seedDonation() {
     };
 
   const donationPromises: Promise<Prisma.DonationCreateManyInput>[] =
-    Array.from({ length: 50 }, () => generateDonationData());
+    Array.from({ length: 100 }, () => generateDonationData());
 
   const donationsData: Prisma.DonationCreateManyInput[] = await Promise.all(
     donationPromises

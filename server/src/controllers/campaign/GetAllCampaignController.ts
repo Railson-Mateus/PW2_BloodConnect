@@ -5,8 +5,8 @@ export class GetAllCampaignController implements IController {
   constructor(private getAllCampaignService: IService<unknown, ICampaign[]>) {}
 
   async handle(): Promise<ICampaign[]> {
-    const allCampaign = await this.getAllCampaignService.execute();
-
+    const allCampaign = await this.getAllCampaignService.execute(undefined);
+    
     return allCampaign;
   }
 }

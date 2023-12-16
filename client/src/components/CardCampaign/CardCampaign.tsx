@@ -41,7 +41,7 @@ const CardCampaign = ({ campaign, handleOpen, handleDelete }: IProps) => {
           backgroundColor: "rgba(217,217,217,0.2)",
         }}
       >
-        //rend caso for admin
+        {/* rend caso for admin */}
         {user?.isAdmin && (
           <Box display={"flex"} justifyContent={"space-between"}>
             <Button sx={{ color: "black" }} onClick={handleEdit}>
@@ -54,9 +54,9 @@ const CardCampaign = ({ campaign, handleOpen, handleDelete }: IProps) => {
         )}
         <CardMedia
           component="img"
-          sx={{ marginTop: 2, objectFit: "contain", height: 140 }}
-          image={userImgUrl}
-          title="imagem-hemonucleo"
+          sx={{ marginTop: 0, objectFit: "contain", height: 120 }}
+          image={campaign.image}
+          title="imagem-de-campanha"
         ></CardMedia>
         <CardContent
           sx={{ display: "flex", flexDirection: "column", color: "white" }}
@@ -65,35 +65,35 @@ const CardCampaign = ({ campaign, handleOpen, handleDelete }: IProps) => {
             gutterBottom
             variant="h5"
             component="div"
-            sx={{ textAlign: "center" }}
+            sx={{ textAlign: "center", fontSize: 20 }}
           >
             {campaign.title}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ color: "white" }}
+            sx={{ color: "white", textAlign:"center" }}
           >
             {campaign.description}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ color: "white" }}
+            sx={{ color: "white",textAlign:"center" }}
           >
             {campaign.local}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ color: "white" }}
+            sx={{ color: "white", textAlign:"center" }}
           >
             {dateStart.toLocaleDateString()}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ color: "white" }}
+            sx={{ color: "white", textAlign:"center" }}
           >
             {dateEnd.toLocaleDateString()}
           </Typography>
