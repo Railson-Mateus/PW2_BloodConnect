@@ -157,14 +157,14 @@ const Campaign = () => {
         }}
       >
         <Avatar
-          sx={{ maxWidth: 128, maxHeight: 128, minWidth: 80, minHeight: 80 }}
+          sx={{ maxWidth: 128, maxHeight: 128, minWidth: 50, minHeight: 50, marginLeft:isSmallScreen? 2 : 0 }}
           src={campaign}
           alt="imagem de campanha"
         />
 
         <Typography
           sx={{
-            fontSize: isSmallScreen ? 24 : 40,
+            fontSize: isSmallScreen ? 15 : 20,
             color: "white",
             fontStyle: "bold",
             ml: 2,
@@ -179,7 +179,7 @@ const Campaign = () => {
           size="medium"
           onClick={openModal}
         >
-          <AddCircleIcon sx={{ color: "#000", fontSize: 54 }} />
+          <AddCircleIcon sx={{ color: "#000", fontSize: isSmallScreen? 30 : 40 }} />
         </Button>
       </Box>
       <Box
@@ -214,7 +214,8 @@ const Campaign = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: 400,
+            width: isSmallScreen? 300 : 400,
+            height: isSmallScreen? 528 : 500,
             bgcolor: "background.paper",
             border: "2px solid #000",
             boxShadow: 24,

@@ -41,8 +41,8 @@ const CardCampaign = ({ campaign, handleOpen, handleDelete }: IProps) => {
     <>
       <Card
         sx={{
-          width: isSmallScreen ? 300 : 500,
-          height: isSmallScreen ? 300 : 300,
+          width: isSmallScreen ? 250 : 400,
+          height: isSmallScreen ? 400 : 500,
           backgroundColor: "rgba(217,217,217,0.2)",
         }}
       >
@@ -70,35 +70,35 @@ const CardCampaign = ({ campaign, handleOpen, handleDelete }: IProps) => {
             gutterBottom
             variant="h5"
             component="div"
-            sx={{ textAlign: "center", fontSize: 20 }}
+            sx={{ textAlign: "center", fontSize: isSmallScreen? 20 : 30}}
           >
             {campaign.title}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ color: "white", textAlign: "center" }}
+            sx={{ color: "white", textAlign: "center", fontSize: isSmallScreen? 15 : 20 }}
           >
             {campaign.description}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ color: "white", textAlign: "center" }}
+            sx={{ color: "white", textAlign: "center", fontSize: isSmallScreen? 15 : 20 }}
           >
             {campaign.local}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ color: "white", textAlign: "center" }}
+            sx={{ color: "white", textAlign: "center", fontSize: isSmallScreen? 15 : 20 }}
           >
             {dateStart.toLocaleDateString()}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ color: "white", textAlign: "center" }}
+            sx={{ color: "white", textAlign: "center", fontSize: isSmallScreen? 15 : 20 }}
           >
             {dateEnd.toLocaleDateString()}
           </Typography>

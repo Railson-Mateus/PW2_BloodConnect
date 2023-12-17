@@ -6,6 +6,8 @@ import {
   InputLabel,
   Modal,
   OutlinedInput,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
@@ -28,6 +30,9 @@ const CampaignModal = ({ modal, closeModal }: IProps) => {
   } = useForm<CampaignCreateType>({
     resolver: zodResolver(CampaignSchemaCreate),
   });
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const createCampaign = async (data: CampaignCreateType) => {
       console.log(data)
@@ -65,7 +70,8 @@ const CampaignModal = ({ modal, closeModal }: IProps) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 400,
+          width: isSmallScreen? 280 : 400,
+          height: isSmallScreen? 531 : 500,
           bgcolor: "background.paper",
           border: "2px solid #000",
           boxShadow: 24,
