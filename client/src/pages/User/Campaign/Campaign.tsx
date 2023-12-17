@@ -20,6 +20,8 @@ import {
   Modal,
   OutlinedInput,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import React, { useEffect } from "react";
@@ -31,8 +33,11 @@ import CampaignModal from "@/components/CampaignModal/CampaignModal";
 
 const Campaign = () => {
   const { user } = useAuth();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [open, setOpen] = React.useState(false);
-  const [modal,setModal] = React.useState(false);
+  const [modal, setModal] = React.useState(false);
   const [selectedCampaign, setSelectedCampaign] =
     React.useState<ICampaign | null>(null);
   const [campaigns, setCampaigns] = React.useState<ICampaign[]>(
@@ -40,13 +45,12 @@ const Campaign = () => {
   );
 
   const openModal = async () => {
-  setModal(true);
-  }
+    setModal(true);
+  };
 
   const closeModal = async () => {
     setModal(false);
-    }
-  
+  };
 
   const getCampanhas = async () => {
     try {
@@ -101,14 +105,13 @@ const Campaign = () => {
         const response = await api.post("/file", formData);
 
         data.image = `http://localhost:3000/uploads/${response.data}`;
-
       }
 
       data.startDate = moment(data.startDate, "DD/MM/YYYY").format();
       data.endDate = moment(data.endDate, "DD/MM/YYYY").format();
 
       await api.patch(`/campaign/${selectedCampaign?.id}`, data);
-      
+
       alert("Campanha atualizada com sucesso!");
       handleClose();
     } catch (error) {
@@ -133,67 +136,71 @@ const Campaign = () => {
     getCampanhas();
   }, [selectedCampaign, setValue]);
 
-
   return (
     <Box
       sx={{
         width: "100%",
         height: "100%",
-        pb: 5,
         display: "flex",
-        justifyContent: "center",
+        flexDirection: "column",
         alignItems: "center",
-        gap: 5,
-        flexWrap: "wrap",
-        overflow: "auto"
-        
+        p: 2,
+        margin: "auto",
+        overflow: "auto",
       }}
     >
       <Box
         sx={{
-          paddingLeft: 5,
-          marginTop: 2,
-          marginBottom: 3,
-          width: "100%",
-          height: "18%",
-          display: "flex",  
-          justifyContent: "space-around",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-evenly",
         }}
       >
         <Avatar
-          sx={{ width: 128, height: 128 }}
+          sx={{ maxWidth: 128, maxHeight: 128, minWidth: 80, minHeight: 80 }}
           src={campaign}
           alt="imagem de campanha"
         />
 
         <Typography
           sx={{
-            fontSize: 40 ,
+            fontSize: isSmallScreen ? 24 : 40,
             color: "white",
             fontStyle: "bold",
-            paddingTop: 10,
-            width: 700,
+            ml: 2,
+            textAlign: "left",
+            textJustify: "end",
           }}
         >
           DOE RECOMEÇOS, DOE SANGUE!
         </Typography>
-        <Button sx={{ bgcolor: "transparent" }} size="medium" onClick={openModal}>
-          <AddCircleIcon sx={{ color: "#000", fontSize: 54}} />
+        <Button
+          sx={{ bgcolor: "transparent" }}
+          size="medium"
+          onClick={openModal}
+        >
+          <AddCircleIcon sx={{ color: "#000", fontSize: 54 }} />
         </Button>
       </Box>
+      <Box
+        sx={{
+          mt: 2,
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: 2,
+        }}
+      >
         {campaigns.map((campaign) => (
-        <CardCampaign
-          key={campaign.id}
-          handleOpen={handleOpen}
-          handleDelete={handleDelete}
-          campaign={campaign}
-        />
+          <CardCampaign
+            key={campaign.id}
+            handleOpen={handleOpen}
+            handleDelete={handleDelete}
+            campaign={campaign}
+          />
         ))}
-
-      <CampaignModal
-      closeModal={closeModal}
-      modal = {modal}
-      />
+      </Box>
+      <CampaignModal closeModal={closeModal} modal={modal} />
 
       <Modal
         open={open}
@@ -213,7 +220,7 @@ const Campaign = () => {
             boxShadow: 24,
             p: 4,
           }}
-        >  
+        >
           {selectedCampaign && (
             <>
               <FormControl sx={{ m: 1, width: "100%" }} variant="outlined">
@@ -283,7 +290,7 @@ const Campaign = () => {
                     {errors.description.message}
                   </strong>
                 )}
-              </FormControl> 
+              </FormControl>
 
               <FormControl sx={{ m: 1, width: "100%" }} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-local">

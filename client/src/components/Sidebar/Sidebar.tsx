@@ -174,12 +174,11 @@ const Sidebar = ({ children }: IProps) => {
         <IconButton
           aria-label="open sidebar"
           onClick={toggleSidebarOpen}
-          edge="start"
+          edge="end"
           sx={{
             ...((isSidebarOpen || !smDown) && { display: "none" }),
             position: "fixed",
 
-            ml: 42,
             color: "#fff",
           }}
         >

@@ -9,6 +9,8 @@ import {
   CardContent,
   CardMedia,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 
 interface IProps {
@@ -19,6 +21,9 @@ interface IProps {
 
 const CardCampaign = ({ campaign, handleOpen, handleDelete }: IProps) => {
   const { user } = useAuth();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   const dateStart = new Date(campaign.startDate);
   const dateEnd = new Date(campaign.endDate);
 
@@ -36,8 +41,8 @@ const CardCampaign = ({ campaign, handleOpen, handleDelete }: IProps) => {
     <>
       <Card
         sx={{
-          width: 500,
-          height: 300,
+          width: isSmallScreen ? 300 : 500,
+          height: isSmallScreen ? 300 : 300,
           backgroundColor: "rgba(217,217,217,0.2)",
         }}
       >
@@ -72,28 +77,28 @@ const CardCampaign = ({ campaign, handleOpen, handleDelete }: IProps) => {
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ color: "white", textAlign:"center" }}
+            sx={{ color: "white", textAlign: "center" }}
           >
             {campaign.description}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ color: "white",textAlign:"center" }}
+            sx={{ color: "white", textAlign: "center" }}
           >
             {campaign.local}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ color: "white", textAlign:"center" }}
+            sx={{ color: "white", textAlign: "center" }}
           >
             {dateStart.toLocaleDateString()}
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ color: "white", textAlign:"center" }}
+            sx={{ color: "white", textAlign: "center" }}
           >
             {dateEnd.toLocaleDateString()}
           </Typography>

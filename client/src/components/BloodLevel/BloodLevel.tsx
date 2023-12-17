@@ -19,9 +19,9 @@ function getStatus(numero: number) {
     return "Critico";
   } else if (numero <= 10) {
     return "Alerta";
-  } else if (numero <= 15) {
+  } else if (numero > 10 && numero <= 15) {
     return "Estavel";
-  } else if (numero <= 20) {
+  } else if (numero > 15) {
     return "Adequado";
   }
 }
@@ -36,13 +36,18 @@ const BloodLevel = ({ tipo, nivel }: IProps) => {
       <Grid key={tipo} item>
         <Box
           className={styles.container}
-          width={isSmallScreen ? "30px" : "64px"}
+          width={isSmallScreen ? "32px" : "64px"}
         >
           <Typography color={"white"} fontWeight={700} fontSize={"1rem"}>
             {tipo}
           </Typography>
           <img src={`src/assets/${status}.png`} />
-          <Typography color={"white"} fontWeight={600} fontSize={"1rem"} mt={1}>
+          <Typography
+            color={"white"}
+            fontWeight={600}
+            fontSize={isSmallScreen ? "0.7rem" : "1rem"}
+            mt={1}
+          >
             {status}
           </Typography>
         </Box>

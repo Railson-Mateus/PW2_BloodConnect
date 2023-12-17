@@ -44,6 +44,7 @@ const BloodStockHeader = () => {
   };
 
   const rawData = groupDonationsByBloodType();
+  console.log(rawData);
 
   useEffect(() => {
     getDonations();
@@ -53,28 +54,29 @@ const BloodStockHeader = () => {
     <Box p={1} className={styles.header}>
       {isSmallScreen ? (
         <Grid container>
-          <Grid item sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography color={"#fff"} fontSize={".8rem"}>
-              Estoque atualizado em: {latestDonation}
-            </Typography>
-          </Grid>
-
           <Grid
             item
             sx={{
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "space-between",
+              p: 1,
             }}
           >
             {rawData.map((value) => (
               <BloodLevel nivel={value[1]} tipo={value[0]} />
             ))}
           </Grid>
+
+          <Grid item sx={{ display: "flex", flexDirection: "column" }}>
+            <Typography color={"#fff"} fontSize={".8rem"}>
+              Estoque atualizado em: {latestDonation}
+            </Typography>
+          </Grid>
         </Grid>
       ) : (
         <Grid container>
-          <Grid item xs={12} md={3}>
+          <Grid item>
             <Typography color={"#fff"} fontSize={"1.5rem"} fontWeight={600}>
               Estoque de
             </Typography>
@@ -88,11 +90,13 @@ const BloodStockHeader = () => {
 
           <Grid
             item
-            xs={12}
             md={9}
             sx={{
               display: "flex",
-              justifyContent: "space-evenly",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              ml: 4,
+              gap: 4.2,
             }}
           >
             {rawData.map((value) => (
