@@ -4,8 +4,6 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import { api } from "@/api/axios";
 import {
-  CampaignCreateType,
-  CampaignSchemaCreate,
   CampaignSchemaUpdate,
   CampaignUpdateType,
   ICampaign,
@@ -29,15 +27,26 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import campaign from "../../../assets/campaign.png";
 import moment from "moment";
+import CampaignModal from "@/components/CampaignModal/CampaignModal";
 
 const Campaign = () => {
   const { user } = useAuth();
   const [open, setOpen] = React.useState(false);
+  const [modal,setModal] = React.useState(false);
   const [selectedCampaign, setSelectedCampaign] =
     React.useState<ICampaign | null>(null);
   const [campaigns, setCampaigns] = React.useState<ICampaign[]>(
     [] as ICampaign[]
   );
+
+  const openModal = async () => {
+  setModal(true);
+  }
+
+  const closeModal = async () => {
+    setModal(false);
+    }
+  
 
   const getCampanhas = async () => {
     try {
@@ -73,7 +82,6 @@ const Campaign = () => {
     setOpen(true);
   };
 
-  //campaign edit
   const {
     register,
     handleSubmit,
@@ -85,7 +93,6 @@ const Campaign = () => {
 
   const updateCampaign = async (data: CampaignUpdateType) => {
     try {
-     //tirar if
       if (typeof data.image !== "string") {
         const formData = new FormData();
 
@@ -126,70 +133,6 @@ const Campaign = () => {
     getCampanhas();
   }, [selectedCampaign, setValue]);
 
-//create campaign
-// const handleCloseCreate = () => {
-//   setSelectedCampaign(null);
-//   setOpen(false);
-// };
-
-// const handleOpenCreate = (campaign: ICampaign) => {
-//   setSelectedCampaign(campaign);
-//   setOpen(true);
-// };
-
-
-// const {
-//   registerCreate,
-//   handleSubmitCreate,
-//   setValueCreated,
-//   formState: { errors },
-// } = useForm<CampaignCreateType>({
-//   resolver: zodResolver(CampaignSchemaCreate),
-// });
-
-// const createCampaign = async (data: CampaignCreateType) => {
-//   try {
-//    //tirar if
-//     if (typeof data.image !== "string") {
-//       const formData = new FormData();
-
-//       formData.append("photo", data.image[0]);
-
-//       const response = await api.post("/file", formData);
-
-//       data.image = `http://localhost:3000/uploads/${response.data}`;
-
-//     }
-
-//     data.startDate = moment(data.startDate, "DD/MM/YYYY").format();
-//     data.endDate = moment(data.endDate, "DD/MM/YYYY").format();
-
-//     await api.patch(`/campaign/${selectedCampaign?.id}`, data);
-    
-//     alert("Campanha criada com sucesso!");
-//     handleClose();
-//   } catch (error) {
-//     alert("Error ao criar a campanha!");
-//   }
-// };
-
-// useEffect(() => {
-//   if (selectedCampaign) {
-//     const endDate = new Date(selectedCampaign.endDate).toLocaleDateString();
-//     const startDate = new Date(
-//       selectedCampaign.startDate
-//     ).toLocaleDateString();
-
-//     setValue("title", selectedCampaign.title);
-//     setValue("description", selectedCampaign.description);
-//     setValue("image", selectedCampaign.image);
-//     setValue("startDate", startDate);
-//     setValue("endDate", endDate);
-//     setValue("local", selectedCampaign.local);
-//   }
-//   getCampanhas();
-// }, [selectedCampaign, setValue]);
-
 
   return (
     <Box
@@ -202,7 +145,8 @@ const Campaign = () => {
         alignItems: "center",
         gap: 5,
         flexWrap: "wrap",
-        overflow: "auto",
+        overflow: "auto"
+        
       }}
     >
       <Box
@@ -212,7 +156,7 @@ const Campaign = () => {
           marginBottom: 3,
           width: "100%",
           height: "18%",
-          display: "flex",
+          display: "flex",  
           justifyContent: "space-around",
         }}
       >
@@ -224,7 +168,7 @@ const Campaign = () => {
 
         <Typography
           sx={{
-            fontSize: 40,
+            fontSize: 40 ,
             color: "white",
             fontStyle: "bold",
             paddingTop: 10,
@@ -233,12 +177,11 @@ const Campaign = () => {
         >
           DOE RECOMEÇOS, DOE SANGUE!
         </Typography>
-        <Button sx={{ bgcolor: "transparent" }} size="medium">
-          <AddCircleIcon sx={{ color: "#000", fontSize: 54 }} />
+        <Button sx={{ bgcolor: "transparent" }} size="medium" onClick={openModal}>
+          <AddCircleIcon sx={{ color: "#000", fontSize: 54}} />
         </Button>
       </Box>
-
-      {campaigns.map((campaign) => (
+        {campaigns.map((campaign) => (
         <CardCampaign
           key={campaign.id}
           handleOpen={handleOpen}
@@ -246,6 +189,11 @@ const Campaign = () => {
           campaign={campaign}
         />
         ))}
+
+      <CampaignModal
+      closeModal={closeModal}
+      modal = {modal}
+      />
 
       <Modal
         open={open}
@@ -265,7 +213,7 @@ const Campaign = () => {
             boxShadow: 24,
             p: 4,
           }}
-        >
+        >  
           {selectedCampaign && (
             <>
               <FormControl sx={{ m: 1, width: "100%" }} variant="outlined">
@@ -335,7 +283,7 @@ const Campaign = () => {
                     {errors.description.message}
                   </strong>
                 )}
-              </FormControl>
+              </FormControl> 
 
               <FormControl sx={{ m: 1, width: "100%" }} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-local">
@@ -361,20 +309,12 @@ const Campaign = () => {
               </FormControl>
 
               <FormControl sx={{ m: 1, width: "100%" }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-startDate">
-                  Data de início
-                </InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-startDate"
-                  type={"text"}
+                  type={"date"}
                   {...register("startDate", {
                     required: "Data de início é obrigatória",
                   })}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <EmailOutlinedIcon />
-                    </InputAdornment>
-                  }
                   label="Data de início"
                   sx={{ bgcolor: "#E8F0FE" }}
                 />
@@ -386,20 +326,12 @@ const Campaign = () => {
               </FormControl>
 
               <FormControl sx={{ m: 1, width: "100%" }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-end">
-                  Data limite da campanha
-                </InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-endDate"
-                  type={"text"}
+                  type={"date"}
                   {...register("endDate", {
                     required: "Data limite da campanha",
                   })}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <EmailOutlinedIcon />
-                    </InputAdornment>
-                  }
                   label="Data limite"
                   sx={{ bgcolor: "#E8F0FE" }}
                 />
