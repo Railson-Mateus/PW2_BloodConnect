@@ -1,8 +1,23 @@
+import { api } from "@/api/axios";
 import CardUser from "@/components/CardUser";
+import { IDonation } from "@/models/Donation";
+import { User } from "@/models/User";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, Card, IconButton, InputBase, Paper, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+
 
 const Donnors = () => {
+  const [users, setUsers] = useState<User[]>([] as User[]);
+  const getAllUsers = async () => {
+    const response = await api.get("/user")
+    setUsers(response.data)
+  }
+
+  useEffect(() => {
+    getAllUsers()
+  },[users])
+
   return (
     <>
       <Box sx={{margin:"0 auto", marginTop:"4em"}}>
@@ -34,7 +49,11 @@ const Donnors = () => {
                 Resultados
             </Typography>
             <Box sx={{ width: "1053px", borderRadius: "23px", border: "1px solid #D9D3C7", background: "rgba(255, 255, 255, 0.20)", padding: 2}}>
-                <CardUser />
+                {
+                  users.map((user) => {
+                    return <CardUser id={user.id} nome={user.name} typeBlood={user.bloodType} imageUrl={user.photo}/>
+                  })  
+                }
             </Box>
         </Box>
       </Box>

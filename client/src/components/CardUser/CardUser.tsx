@@ -7,16 +7,36 @@ import {
   Typography,
 } from "@mui/material";
 import backgroundImage from "../../assets/Mask.png";
+import { IDonation } from "@/models/Donation";
+import { useEffect, useState } from "react";
+import { api } from "@/api/axios";
 
 interface IProps {
-  imageUrl: string,
-  donnorId: string,
+  imageUrl: string | null,
   nome: string,
   typeBlood: string,
-  lastDonation: string
+  id: string | undefined
 }
 
-const CardUser = ({imageUrl, donnorId, nome, typeBlood, lastDonation}:IProps) => {
+const CardUser = ({imageUrl, nome, typeBlood, id}:IProps) => {
+  const [lastDonation, setLastDonation] = useState("Nenhuma doacao realizada")
+  console.log(imageUrl)
+  const getLastDonation = async (id:string) => {
+    const response = await api.get(`/user/${id}/latest-donation`);
+
+    const lastDonation = response.data as IDonation;
+
+    if (lastDonation) {
+      const lastDonationDate = new Date(lastDonation.date);
+      setLastDonation(lastDonationDate.toLocaleDateString())
+    }
+  
+  };
+
+  useEffect(()=>{
+    getLastDonation(id)
+  })
+
   return (
     <Card
       sx={{
@@ -46,9 +66,6 @@ const CardUser = ({imageUrl, donnorId, nome, typeBlood, lastDonation}:IProps) =>
         <Box mt={4}>
           <Typography sx={{ fontSize: 22, fontWeight: 300, color: "#fff" }}>
             Nome: {nome}
-          </Typography>
-          <Typography sx={{ fontSize: 22, fontWeight: 300, color: "#fff" }}>
-            Id: {donnorId}
           </Typography>
         </Box>
 
