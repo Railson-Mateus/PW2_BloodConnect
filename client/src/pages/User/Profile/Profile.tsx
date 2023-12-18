@@ -48,24 +48,25 @@ const Profile = () => {
     <Box
       width={"100%"}
       sx={{
+        color:"white",
         justifyContent: "center",
         alignItems: "center",
         display: "flex",
         height: "100%",
-        flexDirection: "column",
-        border: 1
+        flexDirection: "column"
       }}
     >
       <Stack
         direction="column"
         spacing={1}
         alignItems={"center"}
-        marginBottom={1}
+        marginBottom={isSmallScreen? 1 : 2}
       >
         <Avatar
           sx={{
-            width: 100,
-            heitgh: 100,
+            width: 200,
+            height: 200,
+            borderRadius:1,
             "& .MuiAvatar-img": {
               objectFit: "contain",
             },
@@ -73,54 +74,55 @@ const Profile = () => {
           alt="Débora Camilly"
           src={`http://localhost:3000/uploads/${user?.photo}`}
         />
-        <Typography sx={{ fontSize: "1.2rem" }}>{user?.email}</Typography>
+        <Typography sx={{ fontSize: "1.2rem"}}>{user?.email}</Typography>
       </Stack>
       <Card
         variant="outlined"
         sx={{
           justifyContent: "center",
-          width: isSmallScreen ? 250 : 500,
-          height: isSmallScreen? 320: 400,
+          width: isSmallScreen ? 300 : 500,
+          height: isSmallScreen? 250: 400,
           alignSelf: "center",
           borderRadius: 2,
+          marginBottom: isSmallScreen? 1 : 0,
           bgcolor: "rgba(217,217,217,0.4)",
         }}
       >
         <CardContent sx={{}}>
           <Typography
             sx={{
-              margimTop: 10,
+              margimTop: 5,
               textAlign: "center",
               fontSize: isSmallScreen ? "1.1rem" : "1.5rem",
               fontStyle: "italic",
-              marginBottom: 1,
+              color:"white"
             }}
           >
             Tipo Sanguíneo: {user?.bloodType}
           </Typography>
 
-          <Typography sx={{fontSize: isSmallScreen ? "1.1rem" : "1.5rem"}}>
+          <Typography sx={{fontSize: isSmallScreen ? "1.1rem" : "1.5rem", color:"white",}}>
             Nome: {user?.name}
           </Typography>
 
-          <Typography sx={{  fontSize: isSmallScreen ? "1.1rem" : "1.5rem", }}>
+          <Typography sx={{  fontSize: isSmallScreen ? "1.1rem" : "1.5rem", color:"white", }}>
             Gênero: {user?.gender}
           </Typography>
 
-          <Typography sx={{  fontSize: isSmallScreen ? "1.1rem" : "1.5rem", }}>
+          <Typography sx={{  fontSize: isSmallScreen ? "1.1rem" : "1.5rem", color:"white", }}>
             Telefone: {user?.phone}
             </Typography>
 
-          <Typography sx={{  fontSize: isSmallScreen ? "1.1rem" : "1.5rem", }}>
+          <Typography sx={{  fontSize: isSmallScreen ? "1.1rem" : "1.5rem", color:"white", }}>
             Data de Nascimento: {dateOfBirth.toLocaleDateString()}
           </Typography>
 
-          <Typography sx={{  fontSize: isSmallScreen ? "1.1rem" : "1.5rem", }}>
+          <Typography sx={{  fontSize: isSmallScreen ? "1.1rem" : "1.5rem", color:"white", }}>
             Última doação:{" "}
             {lastDonation ? lastDonation : "Você ainda não fez doações"}
           </Typography>
 
-          <Typography sx={{  fontSize: isSmallScreen ? "1.1rem" : "1.5rem", }}>
+          <Typography sx={{  fontSize: isSmallScreen ? "1.1rem" : "1.5rem", color:"white" }}>
             Próxima doação:{" "}
             {nextDonation ? nextDonation : "Você ainda não fez doações"}
           </Typography>

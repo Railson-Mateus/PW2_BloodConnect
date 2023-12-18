@@ -175,11 +175,19 @@ const Campaign = () => {
           DOE RECOMEÇOS, DOE SANGUE!
         </Typography>
         <Button
-          sx={{ bgcolor: "transparent" }}
-          size="medium"
+          sx={{ bgcolor: "transparent"}}
+          size="small"
           onClick={openModal}
         >
-          <AddCircleIcon sx={{ color: "#000", fontSize: isSmallScreen? 30 : 40 }} />
+          <Button
+            size={"small"}
+            sx={{ mx: "auto", mt: 4, bgColor: theme.palette.primary.main, marginLeft: isSmallScreen? -1 : 0 }}
+            variant="contained"
+            startIcon={<AddCircleIcon/>}
+            onClick={openModal}
+          >
+          Adicionar campanha
+          </Button>
         </Button>
       </Box>
       <Box
